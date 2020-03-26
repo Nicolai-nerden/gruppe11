@@ -15,11 +15,8 @@ var takenSpots = []int{}
 func main() {
 
 	fmt.Println("Slik ser brettet ut: \n -------------  \n | 1 | 2 | 3 | \n -------------  \n | 4 | 5 | 6 | \n -------------  \n | 7 | 8 | 9 | \n -------------  \n Skriv inn tallet som representerer posisjonen du vil sette inn din første brikke")
-
 	playGame()
-
 }
-
 
 func playGame() {
 
@@ -29,39 +26,29 @@ func playGame() {
 	checkWinOrDraw()
 
 }
-
-func checkValidity() {
-
-	if lastAnswer > 0 && lastAnswer < 10 {
-
-	} else {
-
-		fmt.Println("Du må velge et tall mellom 1 og 9 da det kun er 9 ruter på brettet. Prøv igjen")
-		fmt.Scanln(&lastAnswer)
-		checkValidity()
-
-	}
-}
-
 func valueCheck() {
 	checkValidity()
-
 	for i := 0; i < len(takenSpots); i++ {
-
 		if lastAnswer == takenSpots[i] {
-
 			fmt.Println("Denne plassen er allerede tatt. Prøv igjen.")
 			fmt.Scanln(&lastAnswer)
 		}
 	}
-
 	takenSpots = append(takenSpots, lastAnswer)
+}
+
+func checkValidity() {
+	if lastAnswer > 0 && lastAnswer < 10 {
+	} else {
+		fmt.Println("Du må velge et tall mellom 1 og 9 da det kun er 9 ruter på brettet. Prøv igjen")
+		fmt.Scanln(&lastAnswer)
+		checkValidity()
+	}
 }
 
 func printGame() {
 
 	game = ""
-
 	var printSignal bool
 
 	for refNum := 1; refNum <= 9; refNum++ {
