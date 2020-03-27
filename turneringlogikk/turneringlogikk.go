@@ -1,56 +1,101 @@
 package main
 
 import (
+	"armyboyz/tictactoe"
 	"fmt"
 	"math"
 	"math/rand"
-	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
-type player struct {
-	name     string
-	score    int
-	timeUsed int
-}
-
-var playerList []player
+var playerList []tictactoe.Player
 var proceed string
+var simulation bool
 
 func main() {
 
-	playerAmount, _ := strconv.Atoi(os.Args[1]) //Skriv et tall på slutten av kommando linjen i terminalen for å sette hvor mange spillere som skal simuleres.
+	chooseGameMode()
 
-	simulateplayerList(playerAmount) //Henter simulerte navn.
-	simulateGameInput(playerAmount)  //Henter inn simulerte tid- og poengresultater.
+	if len(playerList) <= 2 { //Hvis det en eller to spillere, er dette finale.
+		finale()
+		goto end
 
+	}
+	playerList = startQualifying(playerList)
 	sortByTime(len(playerList))  //Sorterer etter kortest tid.
 	sortByScore(len(playerList)) //Sorterer etter flest poeng.
 
 	drawQualifying(len(playerList)) //Trekker ut de som kvalifiserer seg basert på score og deretter tid brukt.
 
 	startTournament(playerList) //Starter turnering med de kvalifiserte spillerne gjentar seg selv intill det er en vinner.
+end:
+}
+
+func chooseGameMode() {
+	var modus string
+	fmt.Println("\nDette spillet har to moduser. Simulasjon og PvP.")
+	fmt.Println("Simulasjon: Simulerer spillere, deres kvalifiserings resultater og turnering. Du trenger kun å trykke enter-knappen underveis for å simulere hver match")
+	fmt.Println("PvP: Her spiller man turneringen. Fyll inn navn for hver deltaker og spill mot hverandre.")
+chooseMode:
+	fmt.Println("\nHvilken modus ønsker du å bruke?")
+	fmt.Println("\n1. PvP")
+	fmt.Println("2. Simulasjon")
+	fmt.Scanln(&modus)
+	modusConv, _ := strconv.Atoi(modus)
+	if modusConv == 1 {
+		simulation = false
+		addPlayers()
+	} else if modusConv == 2 {
+		simulation = true
+		var playerAmount int
+	insertPlayers:
+		fmt.Println("Skriv inn antallet spillere du ønsker å simulere.")
+		fmt.Scanln(&playerAmount)
+		if playerAmount < 1 {
+			fmt.Println("Det må minst være en simulert spiller.")
+			goto insertPlayers
+		}
+		simulateplayerList(playerAmount) //Henter simulerte navn.
+		simulateGameInput(playerAmount)  //Henter inn simulerte tid- og poengresultater.
+	} else {
+		fmt.Println("Ugyldig input. Prøv igjen.")
+		goto chooseMode
+	}
+}
+
+func addPlayers() { // Legger til spillere helt til man skriver "start", returnerer dermed tilbake til main()
+	var inputPlayer string
+nySpiller:
+	fmt.Println("\nSkriv inn navn på deltager du vil legge til.")
+	fmt.Println("Skriv \"start\" for å starte turneringen.")
+	fmt.Scanln(&inputPlayer)
+
+	if strings.TrimSpace(strings.ToLower(inputPlayer)) == "start" {
+		return
+	}
+
+	playerList = append(playerList, tictactoe.Player{inputPlayer, 0, 0})
+	goto nySpiller
+}
+
+func startQualifying([]tictactoe.Player) []tictactoe.Player {
+	return playerList
 }
 
 func simulateplayerList(playerAmount int) {
-
-	//rand.Seed(time.Now().UnixNano()) //forandrer seedet etter hva tiden er. Slik at det gir ulike resultater.
-
+	rand.Seed(time.Now().UnixNano()) //forandrer seedet etter hva tiden er. Slik at det gir ulike resultater.
 	var adjektiv = []string{"Gnålete", "Håpløs", "Keeg", "Nerdete"}
 	var substantiv = []string{"løve", "flodhest", "ape", "sjøku"}
 
 	for i := 0; i < playerAmount; i++ {
-
-		p := player{adjektiv[rand.Intn(4)] + " " + substantiv[rand.Intn(4)], 0, 0}
-
+		p := tictactoe.Player{adjektiv[rand.Intn(4)] + " " + substantiv[rand.Intn(4)], 0, 0}
 		playerList = append(playerList, p)
 	}
-
 }
 
 func simulateGameInput(playerAmount int) { // Simulerer resultat av kvalifiseringsrunde
-
 	possibleResults := []int{0, 1, 3}
 
 	for i := 0; i < playerAmount; i++ { //Simulerer poengsummer fra spill.
@@ -58,29 +103,29 @@ func simulateGameInput(playerAmount int) { // Simulerer resultat av kvalifiserin
 		var gameResult = possibleResults[rand.Intn(3)]
 		var gameResult2 = possibleResults[rand.Intn(3)]
 
-		playerList[i].score = (gameResult + gameResult2)
+		playerList[i].Score = (gameResult + gameResult2)
 
 		//Simulerer tid hver spiller har brukt på trekk denne runden.
 		var gameTime1 = rand.Intn(70) + 30
 		var gameTime2 = rand.Intn(70) + 30
 
-		playerList[i].timeUsed = (gameTime1 + gameTime2)
+		playerList[i].TimeUsed = (gameTime1 + gameTime2)
 	}
 
 }
 
 func sortByTime(playerAmount int) {
 
-	var sortedPlayerList []player
+	var sortedPlayerList []tictactoe.Player
 
 	for g := 0; g < playerAmount; g++ {
 
-		shortestTimeUsed := playerList[0].timeUsed
+		shortestTimeUsed := playerList[0].TimeUsed
 		shortestIndex := 0
 
 		for i := 0; i < len(playerList); i++ { //henter ut den laveste verdien av timeUsed og den tilhørende indexen.
-			if playerList[i].timeUsed <= shortestTimeUsed {
-				shortestTimeUsed = playerList[i].timeUsed
+			if playerList[i].TimeUsed <= shortestTimeUsed {
+				shortestTimeUsed = playerList[i].TimeUsed
 				shortestIndex = i
 			}
 		}
@@ -95,16 +140,16 @@ func sortByTime(playerAmount int) {
 
 func sortByScore(playerAmount int) {
 
-	var sortedPlayerList []player
+	var sortedPlayerList []tictactoe.Player
 
 	for g := 0; g < playerAmount; g++ {
 
-		highestScore := playerList[0].score
+		highestScore := playerList[0].Score
 		highestIndex := 0
 
 		for i := 0; i < len(playerList); i++ { //henter ut den høyeste verdien av score og den tilhørende indexen.
-			if playerList[i].score > highestScore {
-				highestScore = playerList[i].score
+			if playerList[i].Score > highestScore {
+				highestScore = playerList[i].Score
 				highestIndex = i
 			}
 		}
@@ -119,7 +164,7 @@ func sortByScore(playerAmount int) {
 
 func drawQualifying(playerAmount int) {
 
-	var advancingPlayers []player
+	var advancingPlayers []tictactoe.Player
 	nMax := 0
 
 	//sjekker høyeste 2^n som er innenfor antall spillere
@@ -143,7 +188,7 @@ func drawQualifying(playerAmount int) {
 	fmt.Println()
 
 	for i := 0; i < len(advancingPlayers); i++ {
-		fmt.Println(strconv.Itoa(i+1)+".", advancingPlayers[i].name, "Poeng:", advancingPlayers[i].score, "Tid brukt:", advancingPlayers[i].timeUsed)
+		fmt.Println(strconv.Itoa(i+1)+".", advancingPlayers[i].Name, "Poeng:", advancingPlayers[i].Score, "Tid brukt:", advancingPlayers[i].TimeUsed)
 	}
 
 	fmt.Println()
@@ -152,13 +197,13 @@ func drawQualifying(playerAmount int) {
 
 }
 
-func startTournament(remainingPlayers []player) {
+func startTournament(remainingPlayers []tictactoe.Player) {
 
 	var games []string
-	var winners []player
+	var winners []tictactoe.Player
 
 	for i := 0; i < len(remainingPlayers)/2; i++ { //Printer ut de ulike matchuppene.
-		opponents := remainingPlayers[i].name + " vs " + remainingPlayers[(len(remainingPlayers)-i)-1].name
+		opponents := remainingPlayers[i].Name + " vs " + remainingPlayers[(len(remainingPlayers)-i)-1].Name
 		games = append(games, opponents)
 		fmt.Println(strconv.Itoa(i+1) + ". match" + ": " + opponents)
 	}
@@ -171,9 +216,9 @@ func startTournament(remainingPlayers []player) {
 		fmt.Scanln(&proceed)
 
 		//Starter match. Den beste mot den dårligste, nest beste mot nest dårligste osv.
-		matchWinner := playGame(remainingPlayers[i], remainingPlayers[(len(remainingPlayers)-i)-1])
+		matchWinner := tictactoe.PlayGame(remainingPlayers[i], remainingPlayers[(len(remainingPlayers)-i)-1], simulation)
 		fmt.Println("\n##################################")
-		fmt.Println("Vinner av matchen:", matchWinner.name)
+		fmt.Println("Vinner av matchen:", matchWinner.Name)
 		fmt.Println("##################################")
 
 		//legger til vinnerne i en egen slice
@@ -188,19 +233,8 @@ func startTournament(remainingPlayers []player) {
 
 func newRound() {
 
-	if len(playerList) == 2 { //Hvis det kun er to igjen, er dette finale.
-		fmt.Println("\nchochocho chachacha DET ER TID FOR FINALE.")
-		fmt.Println("\nSmash enter for å starte FINALEN")
-		fmt.Scanln(&proceed)
-
-		tournamentWinner := playGame(playerList[0], playerList[1])
-
-		fmt.Println("\nVINNEREN AV TURNERINGEN ER:")
-		fmt.Println("\n##################################")
-		fmt.Println("----------", strings.ToUpper(tournamentWinner.name), "----------")
-		fmt.Println("##################################")
-		fmt.Println("\n\n")
-
+	if len(playerList) <= 2 { //Hvis det kun er to igjen, er dette finale.
+		finale()
 	} else {
 		fmt.Println("\nDet er ", (len(playerList) / 2), "turneringsrunder igjen.")
 		fmt.Println("\nTrykk enter for å starte neste turneringsrunde.")
@@ -209,14 +243,19 @@ func newRound() {
 	}
 }
 
-func playGame(p1 player, p2 player) player { //Simulerer et spill, 50/50 hvem som vinner
-	var rng int = rand.Intn(2)
-	var winner player
+func finale() {
+	opponents := playerList[0].Name + " vs " + playerList[len(playerList)-1].Name
+	fmt.Println("\nchochocho chachacha DET ER TID FOR FINALE.")
+	fmt.Println("Finalen spilles mellom:")
+	fmt.Println(opponents)
+	fmt.Println("\nSmash enter for å starte FINALEN")
+	fmt.Scanln(&proceed)
 
-	if rng == 0 {
-		winner = p1
-	} else {
-		winner = p2
-	}
-	return winner
+	tournamentWinner := tictactoe.PlayGame(playerList[0], playerList[len(playerList)-1], simulation)
+
+	fmt.Println("\nVINNEREN AV TURNERINGEN ER:")
+	fmt.Println("\n##################################")
+	fmt.Println("----------", strings.ToUpper(tournamentWinner.Name), "----------")
+	fmt.Println("##################################")
+	fmt.Println("\n\n")
 }

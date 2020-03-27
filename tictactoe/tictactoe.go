@@ -2,37 +2,56 @@ package tictactoe
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
 	"time"
 )
 
-type player struct {
-	name     string
-	score    int
-	timeUsed int
+//Player er et struct som lagrer verdiene til spillere i tictactoe og turnering.
+type Player struct {
+	Name     string
+	Score    int
+	TimeUsed int
 }
 
 var board map[int]string
 var runde int
-var winner player
+var winner Player
 
 // PlayGame starter Tic Tac Toe. Tar inn to spillere, Returnerer vinneren.
-func PlayGame(p1 player, p2 player) player {
+func PlayGame(p1 Player, p2 Player, simulation bool) Player {
+
+	if simulation { //hvis turneringen er i simuleringsmodus
+		winner = simulateGame(p1, p2)
+		return winner
+	}
 
 	runde = 1
 	board = map[int]string{ // Lagrer spillets trekk. Tomme felt forblir tall som representerer posisjonen dens på brettet.
 		1: "1", 2: "2", 3: "3",
 		4: "4", 5: "5", 6: "6",
-		7: "7", 8: "8", 9: "9",
-	}
+		7: "7", 8: "8", 9: "9"}
 
 	printBoard()
-	fmt.Println("\n" + p1.name + " Starter.")
+	fmt.Println("\n" + p1.Name + " Starter.")
 	newRoundOrGameOver(p1, p2)
 
-	winner.timeUsed = 0 // Resetter tiden brukt slik at den er 0 neste match.
+	winner.TimeUsed = 0 // Resetter tiden brukt slik at den er 0 neste match.
 	return winner
 
+}
+
+func simulateGame(p1 Player, p2 Player) Player { //Simulerer et spill, 50/50 hvem som vinner
+	rand.Seed(time.Now().UnixNano()) //forandrer seedet etter hva tiden er.
+	var rng int = rand.Intn(2)
+	var winner Player
+
+	if rng == 0 {
+		winner = p1
+	} else {
+		winner = p2
+	}
+	return winner
 }
 
 func printBoard() { // Printer ut brettet i terminalen.
@@ -54,7 +73,7 @@ func printBoard() { // Printer ut brettet i terminalen.
 
 }
 
-func placeMove(p1 player, p2 player) (player, player) {
+func placeMove(p1 Player, p2 Player) (Player, Player) {
 	start := time.Now() // Tar tidspunktet siden fra når trekket starter.
 	var move = moveAndValidate()
 	timeUsed := time.Since(start).Milliseconds() // Regner ut tiden som har gått siden trekket startet.
@@ -65,10 +84,10 @@ func placeMove(p1 player, p2 player) (player, player) {
 	}
 	if runde%2 == 0 {
 		board[i] = "O"
-		p2.timeUsed += int(timeUsed)
+		p2.TimeUsed += int(timeUsed)
 	} else {
 		board[i] = "X"
-		p1.timeUsed += int(timeUsed)
+		p1.TimeUsed += int(timeUsed)
 	}
 
 	return p1, p2
@@ -106,7 +125,7 @@ Start:
 	return string(validInputs[i])
 }
 
-func newRoundOrGameOver(p1 player, p2 player) {
+func newRoundOrGameOver(p1 Player, p2 Player) {
 newRound:
 	winningCombos := [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}}
 	fmt.Println("\nSkriv inn tallet som representerer posisjonen du vil sette brikken din på")
@@ -127,15 +146,15 @@ newRound:
 
 	runde++
 	if runde > 9 { //Sjekker om brettet er fylt opp.
-		fmt.Println("\nBrettet er fullt. Det er dermed uavgjort og blir avgjort på tid.")
-		if p1.timeUsed <= p2.timeUsed {
+		fmt.Println("\nBrettet er fullt. Vinneren blir dermed avgjort på tid.")
+		if p1.TimeUsed <= p2.TimeUsed {
 			winner = p1
 		} else {
 			winner = p2
 		}
 
-		fmt.Println("\n "+p1.name+" brukte", p1.timeUsed, "millisekunder.")
-		fmt.Println(" "+p2.name+" brukte", p2.timeUsed, "millisekunder.")
+		fmt.Println("\n "+p1.Name+" brukte", p1.TimeUsed, "millisekunder.")
+		fmt.Println(" "+p2.Name+" brukte", p2.TimeUsed, "millisekunder.")
 
 		return
 	}
