@@ -1,12 +1,12 @@
 package main
 
 import (
-	"armyboyz/tictactoe"
 	"fmt"
 	"math"
 	"math/rand"
 	"strconv"
 	"strings"
+	"tictactoe"
 	"time"
 )
 
