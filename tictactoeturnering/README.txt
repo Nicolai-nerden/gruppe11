@@ -1,11 +1,14 @@
 
-FØR BRUK:
-For å bruke denne applikasjonen må du først kopiere folderet "tictactoe" i denne mappen paste det inn i folderet "src" til go på maskinen din.
+STARTE APPLIKASJONEN:
+macOS/Linux: kjør "tictactoeturnering.exec"
+Windows: kjør "tictactoeturnering.exe"
+Applikasjonen forteller deg hvordan du bruker den.
 
-HVORDAN BRUKE APPLIKASJONEN tictactoeturnering.go:
-1. Åpne terminal i denne mappen
-2. Skriv "go run tictactoeturnering.go" i terminalen. (Selvom det bare skal spilles en match).
-3. Applikasjonen forteller deg hvordan du bruker den.
+HVIS DU VIL GJØRE ENDRINGER I tictactoeturnering.go OG KJØRE DEN MED NYE ENDRINGER:
+1. Kopier folderet "tictactoe" i denne mappen lim det inn i folderet "src" til go på maskinen din.
+2. Gjør endringer i valgfri tekstbehandler f.eks. VS Code.
+3. Åpne terminal i denne mappen.
+4. Skriv "go run tictactoeturnering.go" i terminalen.
 
 OM APPLIKASJONEN "tictactoeturnering.go"
 Det er to moduser i tictactoeturering.go, PvP og simulasjon.
