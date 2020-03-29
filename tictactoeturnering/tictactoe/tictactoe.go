@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-//Player er et struct som lagrer verdiene til spillere i tictactoe og turnering.
+// Player er et struct som lagrer verdiene til spillere i tictactoe og turnering.
 type Player struct {
 	Name     string
 	Score    int
@@ -38,7 +38,8 @@ func PlayGame(p1 Player, p2 Player, simulation bool) Player {
 	return winner
 }
 
-func simulateGame(p1 Player, p2 Player) Player { //Simulerer et spill, 50/50 hvem som vinner
+// simulateGame simulerer et spill, 50/50 hvem som vinner
+func simulateGame(p1 Player, p2 Player) Player {
 	rand.Seed(time.Now().UnixNano()) //forandrer seedet etter hva tiden er.
 	var rng int = rand.Intn(2)
 	var winner Player
@@ -51,7 +52,8 @@ func simulateGame(p1 Player, p2 Player) Player { //Simulerer et spill, 50/50 hve
 	return winner
 }
 
-func printBoard() { // Printer ut brettet i terminalen.
+// printBoard printer ut hvordan brettet ser ut med eventuelle trekk i terminalen.
+func printBoard() {
 
 	line := " ------------- "
 	wall := " | "
@@ -70,6 +72,7 @@ func printBoard() { // Printer ut brettet i terminalen.
 
 }
 
+// place Move plasserer trekk på brettet.
 func placeMove(p1 Player, p2 Player) (Player, Player) {
 	start := time.Now() // Tar tidspunktet siden fra når trekket starter.
 	var move = moveAndValidate()
@@ -90,9 +93,9 @@ func placeMove(p1 Player, p2 Player) (Player, Player) {
 	return p1, p2
 }
 
+// moveAndValidate scanner inn input, sjekker om første tegnet er et tall mellom 1-9 i bytes. Starter på nytt hvis ikke.
+// hvis det er det returnerer den dette tegnet tilbake som en string.
 func moveAndValidate() string {
-	// Scanner inn input, sjekker om første tegnet er et tall mellom 1-9 i bytes. Starter på nytt hvis ikke.
-	// Hvis det er det returnerer den dette tegnet tilbake som en string.
 Start:
 	var move string
 	validInputs := [][]byte{{49}, {50}, {51}, {52}, {53}, {54}, {55}, {56}, {57}} //gyldige svar i bytes
@@ -122,6 +125,7 @@ Start:
 	return string(validInputs[i])
 }
 
+// newRoundOrGameOver sjekker om det er en vinner, uavgjort eller om den skal starte en ny runde.
 func newRoundOrGameOver(p1 Player, p2 Player) {
 newRound:
 	winningCombos := [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}}

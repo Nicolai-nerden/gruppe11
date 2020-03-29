@@ -47,6 +47,9 @@ chooseMode:
 	if modusConv == 1 {
 		simulation = false
 		addPlayers()
+		if len(playerList) <= 2 { //Hvis det en eller to spillere, er dette finale.
+			return
+		}
 		kvalikk(playerList, simulation)
 	} else if modusConv == 2 {
 		simulation = true
