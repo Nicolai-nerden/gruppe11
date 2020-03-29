@@ -21,18 +21,18 @@ func main() {
 	if len(playerList) <= 2 { //Hvis det en eller to spillere, er dette finale.
 		finale()
 		goto end
-
 	}
-	playerList = startQualifying(playerList)
 	sortByTime(len(playerList))  //Sorterer etter kortest tid.
 	sortByScore(len(playerList)) //Sorterer etter flest poeng.
 
 	drawQualifying(len(playerList)) //Trekker ut de som kvalifiserer seg basert på score og deretter tid brukt.
 
-	startTournament(playerList) //Starter turnering med de kvalifiserte spillerne gjentar seg selv intill det er en vinner.
+	playOffs(playerList) //Starter turnering med de kvalifiserte spillerne gjentar seg selv intill det er en vinner.
 end:
 }
 
+// chooseGameMode velger modus, enten simulasjon eller PvP. Hvis simulasjon lager den random spillere og kvalikkresultater.
+// Hvis PvP legger den til ønskede spillere og starter kvalikk.
 func chooseGameMode() {
 	var modus string
 	fmt.Println("\nDette spillet har to moduser. Simulasjon og PvP.")
@@ -47,6 +47,7 @@ chooseMode:
 	if modusConv == 1 {
 		simulation = false
 		addPlayers()
+		kvalikk(playerList, simulation)
 	} else if modusConv == 2 {
 		simulation = true
 		var playerAmount int
@@ -65,7 +66,8 @@ chooseMode:
 	}
 }
 
-func addPlayers() { // Legger til spillere helt til man skriver "start", returnerer dermed tilbake til main()
+// addPlayers legger til spillere helt til man skriver "start", returnerer dermed tilbake til chooseGameMode
+func addPlayers() {
 	var inputPlayer string
 nySpiller:
 	fmt.Println("\nSkriv inn navn på deltager du vil legge til.")
@@ -95,7 +97,8 @@ func simulateplayerList(playerAmount int) {
 	}
 }
 
-func simulateGameInput(playerAmount int) { // Simulerer resultat av kvalifiseringsrunde
+// simulateGameInput simulerer resultat av kvalifiseringsrunde for simulerte spillere.
+func simulateGameInput(playerAmount int) {
 	possibleResults := []int{0, 1, 3}
 
 	for i := 0; i < playerAmount; i++ { //Simulerer poengsummer fra spill.
@@ -114,6 +117,7 @@ func simulateGameInput(playerAmount int) { // Simulerer resultat av kvalifiserin
 
 }
 
+// sortByTime sorterer spiller listen etter tid brukt i kvalikken.
 func sortByTime(playerAmount int) {
 
 	var sortedPlayerList []tictactoe.Player
@@ -138,6 +142,7 @@ func sortByTime(playerAmount int) {
 	playerList = sortedPlayerList //oppdaterer tabellen, versjonen sortert etter tid.
 }
 
+// sortByScore sorterer spillerlisten etter poengsummen fra kvalikken
 func sortByScore(playerAmount int) {
 
 	var sortedPlayerList []tictactoe.Player
@@ -162,6 +167,7 @@ func sortByScore(playerAmount int) {
 	playerList = sortedPlayerList //oppdaterer tabellen, til versjonen sortert etter tid og score.
 }
 
+// drawQualifying velger ut de øverste 2^n av spillerlisten som er sortert etter poeng sum>tid brukt. Altså teller poeng mer enn tid brukt.
 func drawQualifying(playerAmount int) {
 
 	var advancingPlayers []tictactoe.Player
@@ -197,7 +203,8 @@ func drawQualifying(playerAmount int) {
 
 }
 
-func startTournament(remainingPlayers []tictactoe.Player) {
+// playOffs starter turneringen og setter opp matcher og deretter starter nye turneringsrunder helt til det er finale.
+func playOffs(remainingPlayers []tictactoe.Player) {
 
 	var games []string
 	var winners []tictactoe.Player
@@ -231,6 +238,7 @@ func startTournament(remainingPlayers []tictactoe.Player) {
 
 }
 
+// newRound starter ny turneringsrunde hvis ikke det er finale.
 func newRound() {
 
 	if len(playerList) <= 2 { //Hvis det kun er to igjen, er dette finale.
@@ -239,10 +247,70 @@ func newRound() {
 		fmt.Println("\nDet er ", (len(playerList) / 2), "turneringsrunder igjen.")
 		fmt.Println("\nTrykk enter for å starte neste turneringsrunde.")
 		fmt.Scanln(&proceed)
-		startTournament(playerList)
+		playOffs(playerList)
 	}
 }
 
+// kvalikk spiller kvalikk mellom spillerne lagt inn i pvp modus.
+func kvalikk(playerList []tictactoe.Player, simulation bool) []tictactoe.Player {
+
+	var games [][]tictactoe.Player
+
+	for i := 0; i < len(playerList); i++ { // Setter opp og printer ut de ulike matchuppene.
+		if i < len(playerList)-1 {
+			games = append(games, []tictactoe.Player{playerList[i], playerList[i+1]})
+		} else {
+			games = append(games, []tictactoe.Player{playerList[i], playerList[0]})
+		}
+	}
+
+	games = gamesSorted(games)
+
+	for i := 0; i < len(games); i++ { //Spiller ut turneringsrundens matcher
+		fmt.Println("\nNeste match:")
+		fmt.Println("\n-- " + games[i][0].Name + " vs " + games[i][1].Name + " --")
+		fmt.Println("\nTrykk enter for å starte matchen.")
+		fmt.Scanln(&proceed)
+
+		//Starter matcher
+		matchWinner := tictactoe.PlayGame(games[i][0], games[i][1], simulation)
+		matchWinner.Score += 3
+		fmt.Println("\n##################################")
+		fmt.Println("Vinner av matchen:", matchWinner.Name)
+		fmt.Println("##################################")
+
+		//legger til poeng og tid brukt til vinneren sin struct.
+		g := 0
+		for matchWinner.Name != playerList[g].Name {
+			g++
+		}
+		playerList[g].Score = matchWinner.Score
+		playerList[g].TimeUsed = matchWinner.TimeUsed
+	}
+
+	return playerList
+}
+
+// gamesSorted fordeler matchene slik at alle spillere spiller kvalifiseringsmatchene med et jevnt mellomrom
+// i stedetfor at hver spiller spiller to matcher rett etter hverandre.
+func gamesSorted(games [][]tictactoe.Player) [][]tictactoe.Player {
+	var gamesSorted [][]tictactoe.Player
+
+	for i := 1; i <= 2; i++ {
+		for g := 0; g < len(games); g++ {
+			k := g + i
+			if k%2 != 0 {
+				gamesSorted = append(gamesSorted, games[g])
+			}
+		}
+	}
+	for i := 0; i < len(gamesSorted); i++ {
+		fmt.Println(strconv.Itoa(i+1) + ". match" + ": " + gamesSorted[i][0].Name + " vs " + gamesSorted[i][1].Name)
+	}
+	return gamesSorted
+}
+
+// finale setter opp finale mellom de to finalistene.
 func finale() {
 	opponents := playerList[0].Name + " vs " + playerList[len(playerList)-1].Name
 	fmt.Println("\nchochocho chachacha DET ER TID FOR FINALE.")

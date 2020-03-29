@@ -35,10 +35,7 @@ func PlayGame(p1 Player, p2 Player, simulation bool) Player {
 	printBoard()
 	fmt.Println("\n" + p1.Name + " Starter.")
 	newRoundOrGameOver(p1, p2)
-
-	winner.TimeUsed = 0 // Resetter tiden brukt slik at den er 0 neste match.
 	return winner
-
 }
 
 func simulateGame(p1 Player, p2 Player) Player { //Simulerer et spill, 50/50 hvem som vinner
