@@ -22,7 +22,7 @@ Hvis du vil spille kun en match må dette likevel gjøres i tictactoeturnering.g
 HVORDAN TURNERINGSLOGIKKEN FUNGERER.
 1. Spillet starter en kvalifiseringsrunde med alle spillerne lagt til.
 2. Alle spiller dermed to matcher hver. 
-3. Det er ikke mulig å få uavgjort. Hvis spiller blir fylt uten en vinner, blir vinneren avgjort basert på hvem som har brukt minst tid.
+3. Det er ikke mulig å få uavgjort. Hvis spillet blir fylt uten en vinner, blir vinneren avgjort basert på hvem som har brukt minst tid.
 4. Spillet sorterer tabellen etter hvem som har høyest score. Disse er igjen sortert etter hvem som har brukt minst tid totalt i kvalifiseringsrunden. 
    Slik er de med mest poeng øverst og i hver poengkategori er disse sortert etter minst tid brukt.
 5. Det øverste antallet spillerne som er en eksponent av 2 (2^n) dvs. 2, 4, 8, 16 osv. Kvalifiserer seg til sluttspillet.
