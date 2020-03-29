@@ -21,12 +21,14 @@ func main() {
 	if len(playerList) <= 2 { //Hvis det en eller to spillere, er dette finale.
 		finale()
 		goto end
+	} else if len(playerList) == getNMax(len(playerList)) { // hvis man er 2^n spillere (2, 4, 8, osv.) kan man gå rett til vanlig turnering.
+		goto playOffs
 	}
 	sortByTime(len(playerList))  //Sorterer etter kortest tid.
 	sortByScore(len(playerList)) //Sorterer etter flest poeng.
 
 	drawQualifying(len(playerList)) //Trekker ut de som kvalifiserer seg basert på score og deretter tid brukt.
-
+playOffs:
 	playOffs(playerList) //Starter turnering med de kvalifiserte spillerne gjentar seg selv intill det er en vinner.
 end:
 }
@@ -47,7 +49,7 @@ chooseMode:
 	if modusConv == 1 {
 		simulation = false
 		addPlayers()
-		if len(playerList) <= 2 { //Hvis det en eller to spillere, er dette finale.
+		if len(playerList) <= 2 || len(playerList) == getNMax(len(playerList)) { //Hvis det en eller to spillere, er dette finale. Eller hvis det ikke er behov for kvalikk.
 			return
 		}
 		kvalikk(playerList, simulation)
@@ -174,18 +176,7 @@ func sortByScore(playerAmount int) {
 func drawQualifying(playerAmount int) {
 
 	var advancingPlayers []tictactoe.Player
-	nMax := 0
-
-	//sjekker høyeste 2^n som er innenfor antall spillere
-	for int(math.Exp2(float64(nMax))) <= playerAmount {
-		nMax++
-	}
-
-	if int(math.Exp2(float64(nMax))) != playerAmount { //Hvis nMax ikke er lik antall spillere betyr det at nMax er en for stor.
-		nMax--
-	}
-
-	amountQualPlayers := int(math.Exp2(float64(nMax)))
+	amountQualPlayers := getNMax(playerAmount)
 
 	for i := 0; i < amountQualPlayers; i++ { //Henter ut de øverste 2^nMax antall spillerne i poengtabellen.
 
@@ -204,6 +195,21 @@ func drawQualifying(playerAmount int) {
 
 	playerList = advancingPlayers
 
+}
+
+//sjekker høyeste 2^n som er innenfor antall spillere
+func getNMax(playerAmount int) int {
+
+	nMax := 0
+	for int(math.Exp2(float64(nMax))) <= playerAmount {
+		nMax++
+	}
+
+	if int(math.Exp2(float64(nMax))) != playerAmount { //Hvis nMax ikke er lik antall spillere betyr det at nMax er en for stor.
+		nMax--
+	}
+
+	return int(math.Exp2(float64(nMax)))
 }
 
 // playOffs starter turneringen og setter opp matcher og deretter starter nye turneringsrunder helt til det er finale.
