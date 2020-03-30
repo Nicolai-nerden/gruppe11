@@ -21,7 +21,7 @@ func main() {
 	if len(playerList) <= 2 { //Hvis det en eller to spillere, er dette finale.
 		finale()
 		goto end
-	} else if len(playerList) == getNMax(len(playerList)) { // hvis man er 2^n spillere (2, 4, 8, osv.) kan man gå rett til vanlig turnering.
+	} else if len(playerList) == getNMax(len(playerList)) { // hvis antall spillere er en toerpotens (2, 4, 8, osv.) kan man gå rett til vanlig turnering.
 		goto playOffs
 	}
 	sortByTime(len(playerList))  //Sorterer etter kortest tid.
