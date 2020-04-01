@@ -1,5 +1,12 @@
 
-HVORDAN KJØRE APPLIKASJONEN:
+FØR DU KJØRER:
+1. Gå til mappen denne mappen ligger inni og følg "README.txt" der.
+
+HVORDAN KJØRE "tictactoeturnering.go":
+1. Åpne terminalen i mappen "tictactoeturnering"
+2. Skriv "go run tictactoeturnering.go" i terminalen og trykk enter.
+
+HVORDAN KJØRE BUILDET APPLIKASJONER (.exec og .exe):
 macOS/Linux: kjør "tictactoeturnering"
 
 Hvis den ikke vil kjøre:
@@ -15,24 +22,17 @@ Hvis den ikke vil kjøre fordi det er fra en uidentifisert utvikler:
 
 Windows: kjør "tictactoeturnering.exe"
 
-Applikasjonen forteller deg hvordan du bruker den.
+Applikasjonen forteller deg hvordan du bruker den. 
 
 
-HVIS DU VIL GJØRE ENDRINGER I tictactoeturnering.go OG KJØRE DEN MED NYE ENDRINGER:
-1. Kopier folderet "tictactoe" i denne mappen lim det inn i folderet "src" til go på maskinen din.
-2. Gjør endringer i valgfri tekstbehandler f.eks. VS Code.
-3. Åpne terminal i denne mappen.
-4. Skriv "go run tictactoeturnering.go" i terminalen.
-
-
-OM APPLIKASJONEN "tictactoeturnering.go"
+OM APPLIKASJONEN "tictactoeturnering.go" i mappen tictactoeturnering
 Det er to moduser i tictactoeturering.go, PvP og Simulasjon.
 1. PvP lar deg legge til spillere og starter turneringen deretter. Her blir alle matchene spilt manuelt.
 2. Simulasjon simulerer spillere, kvalifiseringsresultater og deretter turneringen. Du må trykke enter-knappen for hvert steg. 
    Alle matcher blir simulert. Hvis du hvil spille ut turneringen kjapt kan du spamme enter-knappen helt til applikasjonen er avsluttet.
 
 
-OM APPLIKASJONEN "tictactoe.go" i "tictactoe-folderet":
+OM APPLIKASJONEN "tictactoe.go" i mappen "tictactoe":
 Dette er logikken for selve Tic-Tac-Toe-spillet.
 Dette er kun en pakke som brukes i tictactoeturnering.go.
 Dette er for å modulere koden i to moduler - en for spillet og en for turneringslogikken.

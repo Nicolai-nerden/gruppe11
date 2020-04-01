@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"gruppe11/mp01/tictactoe"
+	"gruppe11/mp02/supportedLangs"
+	"gruppe11/mp02/validInputs"
 	"math"
 	"math/rand"
 	"strconv"
 	"strings"
-	"tictactoe"
 	"time"
 )
 
@@ -36,28 +38,38 @@ end:
 // chooseGameMode velger modus, enten simulasjon eller PvP. Hvis simulasjon lager den random spillere og kvalikkresultater.
 // Hvis PvP legger den til ønskede spillere og starter kvalikk.
 func chooseGameMode() {
-	var modus string
 	fmt.Println("\nDette spillet har to moduser. Simulasjon og PvP.")
-	fmt.Println("Simulasjon: Simulerer spillere, deres kvalifiserings resultater og turnering. Du trenger kun å trykke enter-knappen underveis for å simulere hver match")
-	fmt.Println("PvP: Her spiller man turneringen. Fyll inn navn for hver deltaker og spill mot hverandre.")
+	fmt.Println("1. PvP: Her spiller man turneringen. Fyll inn navn for hver deltaker og spill mot hverandre.")
+	fmt.Println("2. Simulasjon: Simulerer spillere, deres kvalifiseringsresultater og turnering.")
+	fmt.Println("   Du trenger kun å trykke enter-knappen underveis for å simulere hver match i simuleringsmodus.")
+
+	fmt.Print("\nStøttede skriftspråk: ")
+	for i := 0; i < len(supportedLangs.SupportedLangs); i++ {
+		if i == len(supportedLangs.SupportedLangs)-1 {
+			fmt.Println("og " + supportedLangs.SupportedLangs[i]) //linjeshift
+			break
+		}
+		fmt.Print(supportedLangs.SupportedLangs[i] + ", ")
+	}
 chooseMode:
 	fmt.Println("\nHvilken modus ønsker du å bruke?")
 	fmt.Println("\n1. PvP")
 	fmt.Println("2. Simulasjon")
-	fmt.Scanln(&modus)
-	modusConv, _ := strconv.Atoi(modus)
-	if modusConv == 1 {
+	modus := validInputs.CheckIfValid()
+	if modus == 1 {
 		simulation = false
 		addPlayers()
 		if len(playerList) <= 2 || len(playerList) == getNMax(len(playerList)) { //Hvis det en eller to spillere, er dette finale. Eller hvis det ikke er behov for kvalikk.
 			return
 		}
 		kvalikk(playerList, simulation)
-	} else if modusConv == 2 {
+	} else if modus == 2 {
 		simulation = true
 		var playerAmount int
 	insertPlayers:
-		fmt.Println("Skriv inn antallet spillere du ønsker å simulere.")
+		fmt.Println("\nSkriv inn antallet spillere du ønsker å simulere med latiske tegn (valige tall).")
+		fmt.Println("(Denne inputen støtter kun de latinske tegnene slik som \"20\". for at man skal kunne velge opp mot evig antall simulerte spillere")
+		fmt.Println("Dette er for at inputvalidatoren vår kun går opp til 9. Alle andre inputs i spillet kan skrives med skrifttegn fra de andre støttede skriftspråkene.)")
 		fmt.Scanln(&playerAmount)
 		if playerAmount < 1 {
 			fmt.Println("Det må minst være en simulert spiller.")

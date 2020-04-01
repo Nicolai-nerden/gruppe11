@@ -1,14 +1,12 @@
 package main
 
-//@Nicolai og Daniel
-
 import (
 	"fmt"
+	"gruppe11/mp03/overflow"
+	"gruppe11/mp03/sum"
 	"os"
-	"overflow"
 	"reflect"
 	"strconv"
-	"sum"
 	"unicode"
 	//"github.com/pkg/profile"
 )

@@ -2,6 +2,7 @@ package tictactoe
 
 import (
 	"fmt"
+	"gruppe11/mp02/validInputs"
 	"math/rand"
 	"strconv"
 	"time"
@@ -75,11 +76,11 @@ func printBoard() {
 // place Move plasserer trekk på brettet.
 func placeMove(p1 Player, p2 Player) (Player, Player) {
 	start := time.Now() // Tar tidspunktet siden fra når trekket starter.
-	var move = moveAndValidate()
+	move := checkIfTaken()
 	timeUsed := time.Since(start).Milliseconds() // Regner ut tiden som har gått siden trekket startet.
 
 	i := 0
-	for board[i] != move {
+	for board[i] != strconv.Itoa(move) {
 		i++
 	}
 	if runde%2 == 0 {
@@ -93,36 +94,14 @@ func placeMove(p1 Player, p2 Player) (Player, Player) {
 	return p1, p2
 }
 
-// moveAndValidate scanner inn input, sjekker om første tegnet er et tall mellom 1-9 i bytes. Starter på nytt hvis ikke.
-// hvis det er det returnerer den dette tegnet tilbake som en string.
-func moveAndValidate() string {
-Start:
-	var move string
-	validInputs := [][]byte{{49}, {50}, {51}, {52}, {53}, {54}, {55}, {56}, {57}} //gyldige svar i bytes
-	i := 0
-
-	fmt.Scanln(&move)
-	if move == "" { //hvis tom input
-		fmt.Println("Tomt trekk. Prøv igjen.")
-		goto Start
-	}
-	for (i < len(validInputs)) && ([]byte(move)[0] != validInputs[i][0]) { //Sjekker om inputen er et registrert gyldig trekk.
-		i++
-	}
-
-	if i >= len(validInputs) { //Hvis i er større enn limiten til loopen betyr dette at den ikke fant en samsvarende byte.
-		fmt.Println("Ugyldig trekk. Prøv igjen.")
-		goto Start
-	}
-
-	byteToInt, _ := strconv.Atoi(string(validInputs[i]))
-
-	if board[byteToInt] == "X" || board[byteToInt] == "O" {
+func checkIfTaken() int {
+Again:
+	move := validInputs.CheckIfValid()
+	if board[move] == "X" || board[move] == "O" {
 		fmt.Println("Dette trekket er allerede tatt. Prøv igjen.")
-		goto Start
+		goto Again
 	}
-
-	return string(validInputs[i])
+	return move
 }
 
 // newRoundOrGameOver sjekker om det er en vinner, uavgjort eller om den skal starte en ny runde.
