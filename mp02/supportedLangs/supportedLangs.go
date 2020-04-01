@@ -16,7 +16,7 @@ var SupportedLangs = []string{ // Skriv in navnet på skriftspråket på norsk. 
 	"Mandarin",
 	"Binære tall (4 bits)",
 	"Romertall",
-	"Koreansk"
+	"Koreansk",
 }
 
 // lim in maps med støddede språk under hverandre her
