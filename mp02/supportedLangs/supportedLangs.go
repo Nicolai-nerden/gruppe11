@@ -3,9 +3,10 @@ package supportedLangs
 // ValidInputs lagrer de gyldige inputene til hvert språk.
 // Funksjonelt er det en slice som inneholder maps med int som key og slice av bytes som value.
 var ValidInputs = []map[int][]byte{ // legg til navnet på språket laget på en egen linje, husk komma på slutten. Kommenter navnet ditt bak.
-	standard, // Nicolai
-	mandarin, // Nicolai
-	binary,   // Nicolai
+	standard,      // Nicolai
+	mandarin,      // Nicolai
+	binary,        // Nicolai
+	romanNumerals, //Benjamin
 }
 
 // SupportedLangs inneholder navnet på de ulike språkene som er støttet.
@@ -13,6 +14,7 @@ var SupportedLangs = []string{ // Skriv in navnet på skriftspråket på norsk. 
 	"Vanlige tall",
 	"Mandarin",
 	"Binære tall (4 bits)",
+	"Romertall",
 }
 
 // lim in maps med støddede språk under hverandre her
@@ -50,4 +52,16 @@ var binary = map[int][]byte{
 	7: {48, 49, 49, 49},
 	8: {49, 48, 48, 48},
 	9: {49, 48, 48, 49},
+}
+
+var romanNumerals = map[int][]byte{
+	1: {73},
+	2: {73, 73},
+	3: {73, 73, 73},
+	4: {73, 86},
+	5: {86},
+	6: {86, 73},
+	7: {86, 73, 73},
+	8: {86, 73, 73, 73},
+	9: {73, 88},
 }
