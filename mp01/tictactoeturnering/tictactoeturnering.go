@@ -67,8 +67,8 @@ chooseMode:
 		simulation = true
 		var playerAmount int
 	insertPlayers:
-		fmt.Println("\nSkriv inn antallet spillere du ønsker å simulere med latiske tegn (valige tall).")
-		fmt.Println("(Denne inputen støtter kun de latinske tegnene slik som \"20\". for at man skal kunne velge opp mot evig antall simulerte spillere")
+		fmt.Println("\nSkriv inn antallet spillere du ønsker å simulere med vanlige tall.")
+		fmt.Println("(Denne inputen støtter kun de vanlige tall slik som \"20\" for at man skal kunne velge opp mot evig antall simulerte spillere")
 		fmt.Println("Dette er for at inputvalidatoren vår kun går opp til 9. Alle andre inputs i spillet kan skrives med skrifttegn fra de andre støttede skriftspråkene.)")
 		fmt.Scanln(&playerAmount)
 		if playerAmount < 1 {
