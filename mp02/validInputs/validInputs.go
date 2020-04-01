@@ -11,7 +11,6 @@ import (
 func CheckIfValid() int {
 Start:
 	var move string
-	fmt.Println("Skriv inn trekket du ønsker å gjøre.")
 	fmt.Scanln(&move)
 
 	if len(move) == 0 { //hvis tom input

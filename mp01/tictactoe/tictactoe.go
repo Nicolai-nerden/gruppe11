@@ -96,6 +96,7 @@ func placeMove(p1 Player, p2 Player) (Player, Player) {
 
 func checkIfTaken() int {
 Again:
+	fmt.Println("\nSkriv inn tallet som representerer ruten du vil sette brikken din på.")
 	move := validInputs.CheckIfValid()
 	if board[move] == "X" || board[move] == "O" {
 		fmt.Println("Dette trekket er allerede tatt. Prøv igjen.")
@@ -108,7 +109,6 @@ Again:
 func newRoundOrGameOver(p1 Player, p2 Player) {
 newRound:
 	winningCombos := [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}}
-	fmt.Println("\nSkriv inn tallet som representerer posisjonen du vil sette brikken din på")
 	p1, p2 = placeMove(p1, p2) // plasserer brikken i på brettet og oppdaterer hver spiller har brukt.
 	printBoard()
 
