@@ -17,7 +17,7 @@ Slik kan du legge til nye skriftspråk.
 
 OM SupportedLangs:
 *Dette er en package som brukes av validInputs.go
-Inneholder tabeller med ulike språk og deres skrifttegn 1-9 i bytes.
+Inneholder tabeller med ulike språk og deres skrifttegn 1-9 i bytes (values) og deres tilhørende verdi i form av vanlige tall (keys).
 
 
 Om validInputs:
