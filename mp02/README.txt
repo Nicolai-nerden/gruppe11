@@ -5,6 +5,8 @@ Dette er kun pkg som brukes i "tictactoe.go" og "tictactoeturnering.go" i mp01 m
 
 HVORDAN LEGGE TIL FLERE SKRIFTSPRÅK:
 Videoen som er linket i denne mappen viser hvordan.
+(https://drive.google.com/file/d/1noOXmF83O5XRLAz_KioY2Vu_eeeqBZVs/view?usp=sharing)
+
 1. Bruk applikasjonen "makeLangMap.go"
 2. Kopier utskriften når applikasjonen er ferdig.
 3. Lim det inn i supportedLangs.go og legg til norsk navn og navnet på slicen i ValidInputs sliten i denne filen.
