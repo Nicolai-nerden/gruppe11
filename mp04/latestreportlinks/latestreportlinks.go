@@ -32,10 +32,10 @@ func FindReportLinks(url string) (string, string) {
 func GetLatestNum(html string) int {
 	latestReportNum := 60 // vi vet at det er minst 60 rapporter ute
 
-	for strings.Contains(html, "Situation report - "+strconv.Itoa(latestReportNum)) {
+	for strings.Contains(html, "sitrep-"+strconv.Itoa(latestReportNum)+"-covid-19") {
 		latestReportNum++
 	}
-	latestReportNum += 2
+	latestReportNum--
 
 	return latestReportNum
 }
@@ -46,14 +46,14 @@ func getURLOf(choppedHTML []string, latestReportNum int) string {
 	sitRepNr := 20
 
 	for i := 0; i < len(choppedHTML); i++ {
-		if choppedHTML[i] == "report" && choppedHTML[i+1] == "-" && (choppedHTML[i+2] == strconv.Itoa(latestReportNum)+"</strong></a><br" || choppedHTML[i+2] == strconv.Itoa(latestReportNum)+"</a></strong><br") {
-			fmt.Println("Sammenligner rapport", latestReportNum)
+		if strings.Contains(choppedHTML[i], "sitrep-"+strconv.Itoa(latestReportNum)+"-covid-19") {
+			fmt.Println("Analyserer rapport", latestReportNum)
 			sitRepNr = i
 			break
 		}
 	}
 
-	urlTag := choppedHTML[sitRepNr-1]
+	urlTag := choppedHTML[sitRepNr]
 	start := 0
 	end := 0
 
