@@ -7,7 +7,8 @@ var ValidInputs = []map[int][]byte{ // legg til navnet på språket laget på en
 	mandarin,      // Nicolai
 	binary,        // Nicolai
 	romanNumerals, //Benjamin
-	korean, //Mati
+	korean,        //Mati
+	letters,       // Nicolai
 }
 
 // SupportedLangs inneholder navnet på de ulike språkene som er støttet.
@@ -17,6 +18,7 @@ var SupportedLangs = []string{ // Skriv in navnet på skriftspråket på norsk. 
 	"Binære tall (4 bits)",
 	"Romertall",
 	"Koreansk",
+	"tallord",
 }
 
 // lim in maps med støddede språk under hverandre her
@@ -78,4 +80,16 @@ var korean = map[int][]byte{
 	7: {236, 157, 188, 234, 179, 177},
 	8: {236, 151, 172, 235, 141, 159},
 	9: {236, 149, 132, 237, 153, 137},
+}
+
+var letters = map[int][]byte{
+	1: {101, 110},
+	2: {116, 111},
+	3: {116, 114, 101},
+	4: {102, 105, 114, 101},
+	5: {102, 101, 109},
+	6: {115, 101, 107, 115},
+	7: {115, 121, 118},
+	8: {195, 165, 116, 116, 101},
+	9: {110, 105},
 }

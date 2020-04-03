@@ -26,7 +26,7 @@ var fileNum int
 // GetStatistics henter ut statistikkene fra i går og idag.
 func GetStatistics() []DayStatistics {
 
-	fmt.Println("Vent mens statistikken analyseres... \nDet vil snart åpne seg en fane i nettleseren din med satistikken.")
+	fmt.Println("Laster inn rapporter... Vennligst vent. \nDet vil snart åpne seg en fane i nettleseren din med satistikken.")
 	todayURL, yesterdayURL := latestreportlinks.FindReportLinks("https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports")
 
 	today := searchURL(todayURL)
