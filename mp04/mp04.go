@@ -38,9 +38,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		for g := 0; g < 3; g++ {
 			if g == 2 {
 				if dif < 0 {
-					fmt.Fprintf(w, "<td style=\"color: green;\">"+strconv.Itoa(int(difConv))+" ↑</td>")
+					fmt.Fprintf(w, "<td style=\"color: green;\">"+strconv.Itoa(int(difConv))+" ↓</td>")
 				} else {
-					fmt.Fprintf(w, "<td style=\"color: red;\">"+strconv.Itoa(int(difConv))+" ↓</td>")
+					fmt.Fprintf(w, "<td style=\"color: red;\">"+strconv.Itoa(int(difConv))+" ↑</td>")
 				}
 			} else {
 				fmt.Fprintf(w, "<td>"+printQueue[g+lineShift]+"</td>")
