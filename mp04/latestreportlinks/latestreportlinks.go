@@ -35,7 +35,7 @@ func GetLatestNum(html string) int {
 	for strings.Contains(html, "Situation report - "+strconv.Itoa(latestReportNum)) {
 		latestReportNum++
 	}
-	latestReportNum++
+	latestReportNum += 2
 
 	return latestReportNum
 }
