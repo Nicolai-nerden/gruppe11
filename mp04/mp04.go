@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"gruppe11/mp04/covidanalytics"
 	"gruppe11/mp04/style"
+	"log"
 	"math"
 	"net/http"
 	"strconv"
-
-	"github.com/pkg/browser"
 )
 
 var opened = false
@@ -56,10 +55,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	if !opened {
-		browser.OpenURL("http://127.0.0.1:8000/")
-		opened = true
-	}
+
+	// if !opened {
+	// 	browser.OpenURL("http://127.0.0.1:8000/")
+	// 	opened = true
+	// }
 	http.HandleFunc("/", indexHandler)
-	http.ListenAndServe(":8000", nil)
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
