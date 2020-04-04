@@ -1,6 +1,7 @@
 package latestreportlinks
 
 import (
+	"crypto/tls"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -10,7 +11,14 @@ import (
 
 // FindReportLinks søker gjennom WHO sin rapport oversikt og finner linken til de filene som er ønsket.
 func FindReportLinks(url string) (string, string) {
-	resp, err := http.Get(url)
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(url)
 	if err != nil {
 		panic(err)
 	}

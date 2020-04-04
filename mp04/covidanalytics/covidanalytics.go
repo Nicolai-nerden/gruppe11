@@ -2,6 +2,7 @@ package covidanalytics
 
 import (
 	"bytes"
+	"crypto/tls"
 	"fmt"
 	"gruppe11/mp04/latestreportlinks"
 	"io"
@@ -86,7 +87,13 @@ func readPlainTextFromPDF(pdfpath string) (text string, err error) {
 // DownloadFile laster ned en fil via url.
 func downloadFile(filepath string, url string) error {
 
-	resp, err := http.Get(url)
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(url)
 	if err != nil {
 		return err
 	}
