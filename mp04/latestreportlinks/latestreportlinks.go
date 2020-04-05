@@ -12,6 +12,7 @@ import (
 // FindReportLinks søker gjennom WHO sin rapport oversikt og finner linken til de filene som er ønsket.
 func FindReportLinks(url string) (string, string) {
 
+	//Who har tydeligvis ikke er gyldig autorisert sertifikat, vi må derfor ignorere denne sikkerhetsjekken.
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
