@@ -49,7 +49,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "</tr>")
 		lineShift += 2
 	}
-
 	fmt.Fprintf(w, style.MainEnd)
 
 }
@@ -57,9 +56,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	// if !opened {
-	// 	browser.OpenURL("http://127.0.0.1:8000/")
+	// 	browser.OpenURL("http://127.0.0.1:8081/")
 	// 	opened = true
 	// }
+
 	http.HandleFunc("/", indexHandler)
 	log.Fatal(http.ListenAndServe(":8081", nil))
+
 }

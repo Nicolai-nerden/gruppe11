@@ -14,7 +14,7 @@ import (
 	"github.com/ledongthuc/pdf"
 )
 
-// DayStatistics inneholder informasjonen til ulike dager.
+// DayStatistics inneholder statistikken for hver dag.
 type DayStatistics struct {
 	InfectedTotal string
 	InfectedNew   string
@@ -38,6 +38,7 @@ func GetStatistics() []DayStatistics {
 	return statistics
 }
 
+// searchURL søker etter norges statistikk.
 func searchURL(url string) DayStatistics {
 
 	if err := downloadFile(strconv.Itoa(fileNum)+".pdf", url); err != nil {
@@ -65,7 +66,7 @@ func searchURL(url string) DayStatistics {
 	return stats
 }
 
-// readPlainTextFromPDF er Ikke selvlaget. Hentet fra: https://siongui.github.io/2018/09/21/go-read-plain-text-in-pdf-file/
+// readPlainTextFromPDF parser pdf til tekst i form av en string.
 func readPlainTextFromPDF(pdfpath string) (text string, err error) {
 	f, r, err := pdf.Open(pdfpath)
 	defer f.Close()
