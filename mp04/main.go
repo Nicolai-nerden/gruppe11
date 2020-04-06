@@ -8,6 +8,9 @@ import (
 	"math"
 	"net/http"
 	"strconv"
+	"time"
+
+	"github.com/teamwork/reload"
 )
 
 var opened = false
@@ -62,5 +65,10 @@ func main() {
 
 	http.HandleFunc("/", indexHandler)
 	log.Fatal(http.ListenAndServe(":8081", nil))
+
+	timer1 := time.NewTimer(1 * time.Hour)
+
+	<-timer1.C
+	reload.Exec()
 
 }
