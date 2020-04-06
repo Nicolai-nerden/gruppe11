@@ -1,10 +1,9 @@
 package tictactoe
 
 import (
-	"gruppe11/mp01/clientcommunication"
+	"fmt"
 	"gruppe11/mp02/validInputs"
 	"math/rand"
-	"net"
 	"strconv"
 	"time"
 )
@@ -21,7 +20,7 @@ var runde int
 var winner Player
 
 // PlayGame starter Tic Tac Toe. Tar inn to spillere, Returnerer vinneren.
-func PlayGame(c net.Conn, p1 Player, p2 Player, simulation bool) Player {
+func PlayGame(p1 Player, p2 Player, simulation bool) Player {
 
 	if simulation { //hvis turneringen er i simuleringsmodus
 		winner = simulateGame(p1, p2)
@@ -34,9 +33,9 @@ func PlayGame(c net.Conn, p1 Player, p2 Player, simulation bool) Player {
 		4: "4", 5: "5", 6: "6",
 		7: "7", 8: "8", 9: "9"}
 
-	printBoard(c)
-	clientcommunication.ClientPrintln(c, "\n"+p1.Name+" Starter.")
-	newRoundOrGameOver(c, p1, p2)
+	printBoard()
+	fmt.Println("\n" + p1.Name + " Starter.")
+	newRoundOrGameOver(p1, p2)
 	return winner
 }
 
@@ -55,29 +54,29 @@ func simulateGame(p1 Player, p2 Player) Player {
 }
 
 // printBoard printer ut hvordan brettet ser ut med eventuelle trekk i terminalen.
-func printBoard(c net.Conn) {
+func printBoard() {
 
 	line := " ------------- "
 	wall := " | "
 	shiftLine := 0
 
-	clientcommunication.ClientPrintln(c, "\n"+line)
+	fmt.Println("\n" + line)
 
 	for g := 0; g < 3; g++ { // Printer ut brettet, en linje om gangen.
 		for i := 1; i <= 3; i++ {
-			clientcommunication.ClientPrint(c, wall+board[i+shiftLine])
+			fmt.Print(wall, board[i+shiftLine])
 		}
-		clientcommunication.ClientPrintln(c, wall)
+		fmt.Println(wall)
 		shiftLine += 3
-		clientcommunication.ClientPrintln(c, line)
+		fmt.Println(line)
 	}
 
 }
 
 // place Move plasserer trekk på brettet.
-func placeMove(c net.Conn, p1 Player, p2 Player) (Player, Player) {
+func placeMove(p1 Player, p2 Player) (Player, Player) {
 	start := time.Now() // Tar tidspunktet siden fra når trekket starter.
-	move := checkIfTaken(c)
+	move := checkIfTaken()
 	timeUsed := time.Since(start).Milliseconds() // Regner ut tiden som har gått siden trekket startet.
 
 	i := 0
@@ -95,36 +94,23 @@ func placeMove(c net.Conn, p1 Player, p2 Player) (Player, Player) {
 	return p1, p2
 }
 
-func checkIfTaken(c net.Conn) int {
-	move := ""
+func checkIfTaken() int {
 Again:
-	clientcommunication.ClientPrintln(c, "\nSkriv inn tallet som representerer ruten du vil sette brikken din på.")
-	move = clientcommunication.ClientRead(c)
-
-	if len(move) == 0 { //hvis tom input
-		clientcommunication.ClientPrintln(c, "Tomt trekk. Prøv igjen.")
+	fmt.Println("\nSkriv inn tallet som representerer ruten du vil sette brikken din på.")
+	move := validInputs.CheckIfValid()
+	if board[move] == "X" || board[move] == "O" {
+		fmt.Println("Dette trekket er allerede tatt. Prøv igjen.")
 		goto Again
 	}
-	parsedMove, valid := validInputs.CheckIfValid(move)
-
-	if !valid {
-		clientcommunication.ClientPrintln(c, "Fant ikke input i støttede skriftsrpåk. Prøv igjen.")
-		goto Again
-	}
-
-	if board[parsedMove] == "X" || board[parsedMove] == "O" {
-		clientcommunication.ClientPrintln(c, "Dette trekket er allerede tatt. Prøv igjen.")
-		goto Again
-	}
-	return parsedMove
+	return move
 }
 
 // newRoundOrGameOver sjekker om det er en vinner, uavgjort eller om den skal starte en ny runde.
-func newRoundOrGameOver(c net.Conn, p1 Player, p2 Player) {
+func newRoundOrGameOver(p1 Player, p2 Player) {
 newRound:
 	winningCombos := [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}}
-	p1, p2 = placeMove(c, p1, p2) // plasserer brikken i på brettet og oppdaterer hver spiller har brukt.
-	printBoard(c)
+	p1, p2 = placeMove(p1, p2) // plasserer brikken i på brettet og oppdaterer hver spiller har brukt.
+	printBoard()
 
 	for i := 0; i < len(winningCombos); i++ { //Sjekker om det er noen vinner kombinasjoner på brettet.
 		if board[winningCombos[i][0]] == board[winningCombos[i][1]] && board[winningCombos[i][1]] == board[winningCombos[i][2]] {
@@ -140,15 +126,15 @@ newRound:
 
 	runde++
 	if runde > 9 { //Sjekker om brettet er fylt opp.
-		clientcommunication.ClientPrintln(c, "\nBrettet er fullt. Vinneren blir dermed avgjort på tid.")
+		fmt.Println("\nBrettet er fullt. Vinneren blir dermed avgjort på tid.")
 		if p1.TimeUsed <= p2.TimeUsed {
 			winner = p1
 		} else {
 			winner = p2
 		}
 
-		clientcommunication.ClientPrintln(c, "\n "+p1.Name+" brukte "+strconv.Itoa(p1.TimeUsed)+" millisekunder.")
-		clientcommunication.ClientPrintln(c, " "+p2.Name+" brukte "+strconv.Itoa(p2.TimeUsed)+" millisekunder.")
+		fmt.Println("\n "+p1.Name+" brukte", p1.TimeUsed, "millisekunder.")
+		fmt.Println(" "+p2.Name+" brukte", p2.TimeUsed, "millisekunder.")
 
 		return
 	}
