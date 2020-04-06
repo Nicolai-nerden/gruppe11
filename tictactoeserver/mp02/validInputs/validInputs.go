@@ -2,7 +2,7 @@ package validInputs
 
 import (
 	"bytes"
-	"gruppe11/mp02/supportedLangs"
+	"tx3server/mp02/supportedLangs"
 	"strings"
 )
 

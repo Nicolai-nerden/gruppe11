@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gruppe11/mp03/overflow"
-	"gruppe11/mp03/sum"
+	"modul3/overflow"
+	"modul3/sum"
 	"os"
 	"reflect"
 	"strconv"

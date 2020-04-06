@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gruppe11/mp04/covidanalytics"
-	"gruppe11/mp04/style"
+	"modul4/covidanalytics"
+	"modul4/style"
 	"log"
 	"math"
 	"net/http"
@@ -58,6 +58,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	// Fjern kommentarer her hvis du vil at nettleseren skal åpnes automatisk
 	// if !opened {
 	// 	browser.OpenURL("http://127.0.0.1:8081/")
 	// 	opened = true

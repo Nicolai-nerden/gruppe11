@@ -2,10 +2,10 @@ package tictactoeturnering
 
 import (
 	"fmt"
-	"gruppe11/mp01/clientcommunication"
-	"gruppe11/mp01/tictactoe"
-	"gruppe11/mp02/supportedLangs"
-	"gruppe11/mp02/validInputs"
+	"tx3server/mp01/clientcommunication"
+	"tx3server/mp01/tictactoe"
+	"tx3server/mp02/supportedLangs"
+	"tx3server/mp02/validInputs"
 	"math"
 	"math/rand"
 	"net"

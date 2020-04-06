@@ -1,11 +1,12 @@
 package tictactoe
 
 import (
-	"gruppe11/mp01/clientcommunication"
-	"gruppe11/mp02/validInputs"
+	"tx3server/mp01/clientcommunication"
+	"tx3server/mp02/validInputs"
 	"math/rand"
 	"net"
 	"strconv"
+
 	"time"
 )
 
