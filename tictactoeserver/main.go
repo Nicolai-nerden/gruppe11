@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gruppe11/mp01/tictactoeturnering"
+	"tx3server/mp01/tictactoeturnering"
 	"math/rand"
 	"net"
 	"time"
@@ -11,7 +11,7 @@ import (
 func main() {
 	fmt.Println("Serveren kjører.")
 
-	l, err := net.Listen("tcp4", ":6060")
+	l, err := net.Listen("tcp4", ":8081")
 	if err != nil {
 		fmt.Println(err)
 		return
