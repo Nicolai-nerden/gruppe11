@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"tx3server/mp01/tictactoeturnering"
 	"math/rand"
 	"net"
 	"time"
+	"tx3server/mp01/tictactoeturnering"
 )
 
 func main() {
@@ -30,7 +30,7 @@ func main() {
 }
 
 func handleConnection(c net.Conn) {
-	fmt.Printf("Serving %s\n", c.RemoteAddr().String())
+	fmt.Printf("Tjener %s\n", c.RemoteAddr().String())
 	defer c.Close()
 	tictactoeturnering.Turnering(c)
 	fmt.Println("closed")
