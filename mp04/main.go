@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"modul4/covidanalytics"
-	"modul4/style"
 	"log"
 	"math"
+	"modul4/covidanalytics"
+	"modul4/style"
 	"net/http"
 	"strconv"
 	"time"
@@ -57,6 +57,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	fmt.Println("Oppdaterer")
 
 	// Fjern kommentarer her hvis du vil at nettleseren skal åpnes automatisk
 	// if !opened {
