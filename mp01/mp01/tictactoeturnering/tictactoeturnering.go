@@ -2,16 +2,16 @@ package tictactoeturnering
 
 import (
 	"fmt"
-	"tx3server/mp01/clientcommunication"
-	"tx3server/mp01/tictactoe"
-	"tx3server/mp02/supportedLangs"
-	"tx3server/mp02/validInputs"
 	"math"
 	"math/rand"
 	"net"
 	"strconv"
 	"strings"
 	"time"
+	"tx3server/mp01/clientcommunication"
+	"tx3server/mp01/tictactoe"
+	"tx3server/mp02/supportedLangs"
+	"tx3server/mp02/validInputs"
 )
 
 var playerList []tictactoe.Player
