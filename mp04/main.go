@@ -8,21 +8,18 @@ import (
 	"modul4/style"
 	"net/http"
 	"strconv"
-	"time"
-
-	"github.com/teamwork/reload"
 )
 
 var opened = false
-var statistics = covidanalytics.GetStatistics()
-var printQueue = []string{
-	statistics[0].InfectedTotal, statistics[1].InfectedTotal,
-	statistics[0].InfectedNew, statistics[1].InfectedNew,
-	statistics[0].DeathsTotal, statistics[1].DeathsTotal,
-	statistics[0].DeathsNew, statistics[1].DeathsNew,
-}
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	var statistics = covidanalytics.GetStatistics()
+	var printQueue = []string{
+		statistics[0].InfectedTotal, statistics[1].InfectedTotal,
+		statistics[0].InfectedNew, statistics[1].InfectedNew,
+		statistics[0].DeathsTotal, statistics[1].DeathsTotal,
+		statistics[0].DeathsNew, statistics[1].DeathsNew,
+	}
 
 	fmt.Fprintf(w, style.Style)
 	fmt.Fprintf(w, style.MainStart)
@@ -58,8 +55,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	fmt.Println("Oppdaterer")
-
 	// Fjern kommentarer her hvis du vil at nettleseren skal åpnes automatisk
 	// if !opened {
 	// 	browser.OpenURL("http://127.0.0.1:8081/")
@@ -68,10 +63,4 @@ func main() {
 
 	http.HandleFunc("/", indexHandler)
 	log.Fatal(http.ListenAndServe(":8081", nil))
-
-	timer1 := time.NewTimer(1 * time.Hour)
-
-	<-timer1.C
-	reload.Exec()
-
 }

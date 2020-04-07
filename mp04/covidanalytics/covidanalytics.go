@@ -58,8 +58,11 @@ func searchURL(url string) DayStatistics {
 			break
 		}
 	}
-
-	fileNum++
+	if fileNum >= 1 {
+		fileNum = 0
+	} else {
+		fileNum++
+	}
 
 	stats := DayStatistics{InfectedTotal: pdfClean[norwayPos+1], InfectedNew: pdfClean[norwayPos+2], DeathsTotal: pdfClean[norwayPos+3], DeathsNew: pdfClean[norwayPos+4]}
 
