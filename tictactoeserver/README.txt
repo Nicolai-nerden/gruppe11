@@ -12,21 +12,12 @@ Windows har derimot ikke netcat som en standard. Dette må derfor installeres. E
 homwbrew eller gjennom nmap. Sistnevnte har vi god erfaring med. 
 
    Nmap kan lastes ned her: https://nmap.org/download.html
-   Mer om map: https://en.wikipedia.org/wiki/Nmap
+   Mer om Nmap: https://en.wikipedia.org/wiki/Nmap
 
 1. Installer netcat, enten det er i homebrew, nmap eller andre program.
 2. For nmap kan du skrive dette. 
 
    Ncat 178.128.250.190 8080
-
-
-Hvordan man spiller turnering:
-Når du starter spiller er det to modus. 
-1. PvP - Her skriver man in navnet på alle spillerne og spiller ut turneringen manuelt.
-2. Simulasjon - simulering av kvalifisering og enkelt matcher. Du velger selv hvor mange 
-   spillere som skal simuleres. Her trenger du kun å trykke på 
-   enter for å simulere hele turneringen steg for steg. (Spam enter for å bli kjapt ferdig.)
-Hvis 
 
 
 OM mp01
