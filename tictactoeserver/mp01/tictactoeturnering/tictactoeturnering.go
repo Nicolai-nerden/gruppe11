@@ -66,8 +66,13 @@ chooseMode:
 	}
 	if modus == 1 {
 		simulation = false
+	addPlayers:
 		addPlayers(c)
-		if len(playerList) <= 2 || len(playerList) == getNMax(len(playerList)) { //Hvis det en eller to spillere, er dette finale. Eller hvis det ikke er behov for kvalikk.
+		if len(playerList) < 1 {
+			clientcommunication.ClientPrintln(c, "\nDet må minst være en spiller. Prøv igjen.")
+			goto addPlayers
+			return
+		} else if len(playerList) <= 2 || len(playerList) == getNMax(len(playerList)) { //Hvis det en eller to spillere, er dette finale. Eller hvis det ikke er behov for kvalikk.
 			return
 		}
 		kvalikk(c, playerList, simulation)
@@ -103,6 +108,9 @@ nySpiller:
 
 	if strings.TrimSpace(strings.ToLower(inputPlayer)) == "start" {
 		return
+	} else if len(inputPlayer) < 1 {
+		clientcommunication.ClientPrintln(c, "\nDu kan ikke legge inn tomme navn. Prøv igjen.")
+		goto nySpiller
 	}
 
 	playerList = append(playerList, tictactoe.Player{inputPlayer, 0, 0})

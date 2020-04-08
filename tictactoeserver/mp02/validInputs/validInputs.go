@@ -2,12 +2,16 @@ package validInputs
 
 import (
 	"bytes"
-	"tx3server/mp02/supportedLangs"
 	"strings"
+	"tx3server/mp02/supportedLangs"
 )
 
 // CheckIfValid sjekker om tegnet skrevet inn et gyldig trekk, på en av de støttede skriftspråkene.
 func CheckIfValid(move string) (int, bool) {
+
+	if len(move) < 1 {
+		return 0, false
+	}
 
 	validity := true
 	input := []byte(strings.Fields(move)[0]) //trimmer inputen og gjør den om til bytes
