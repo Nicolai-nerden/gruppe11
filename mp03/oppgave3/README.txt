@@ -1,9 +1,7 @@
-Før bruk:
-For å bruke denne applikasjonen må du først kopiere folderet "overflow" og "sum" og paste de inn i folderet "src" til go på maskinen din.
 
 Hvordan bruke:
-1. Åpne terminal i folderet "main_sum".
-2. Skriv inn "go run main_sum.go" etterfulgt av to tall som skilles med et mellomrom.
+1. Åpne terminal i folderet "main".
+2. Skriv inn "go run main.go" etterfulgt av to tall som skilles med et mellomrom.
 
 Resultat:
 Applikasjonen vil finne ut hva slags type tall som er tastet inn enten det er desimaltall eller hele tall.
@@ -28,4 +26,4 @@ For å installere skriv in disse linjene i terminalen.
 1. "go get github.com/pkg/profile"
 2. "brew install graphviz"
 
-(hvis det oppstår feil ved installering av graphviz, pass på at du har installert homebrew. Installasjonguide finner du på nettet.
+(hvis det oppstår feil ved installering av graphviz, pass på at du har installert homebrew. Installasjonguide finner du på nettet.)
