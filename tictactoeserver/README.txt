@@ -28,6 +28,7 @@ Du kan likevel bruke applikasjonen lokalt.
 2. kjør "go run main.go"
 3. Åpne ny terminal
 4. kjør "nc localhost 8081" i den nye terminalen.
+   (Ncat localhost 8080 for windows)
 
 OM mp01
 main.go filen er koden som kjøres på serveren vår. Den bruker pakkene: 
