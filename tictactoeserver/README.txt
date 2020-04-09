@@ -19,6 +19,15 @@ homwbrew eller gjennom nmap. Sistnevnte har vi god erfaring med.
 
    Ncat 178.128.250.190 8080
 
+HVIS SERVEREN ER NEDE:
+Hvis nc 178.128.250.190 8080 ikke fungerer, betyr dette at serveren har krasjet. Si gjerne i fra
+til en av medlemmene i gruppe11. 
+Du kan likevel bruke applikasjonen lokalt.
+
+1. Åpne terminal i dette folderet.
+2. kjør "go run main.go"
+3. Åpne ny terminal
+4. kjør "nc localhost 8081" i den nye terminalen.
 
 OM mp01
 main.go filen er koden som kjøres på serveren vår. Den bruker pakkene: 
