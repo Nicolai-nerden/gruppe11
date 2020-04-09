@@ -1,4 +1,4 @@
-package sum
+package sumtest
 
 import "testing"
 
@@ -6,7 +6,7 @@ import "testing"
 var sum_tests_int8 = []struct {
 	n1       int8
 	n2       int8
-	expected int8 
+	expected int8
 }{
 	{1, 2, 3},
 	{4, 5, 9},

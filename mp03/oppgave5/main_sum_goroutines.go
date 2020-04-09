@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
-	"modul3/overflow"
-	"modul3/sum"
+	"modul3/oppgave3/sum"
+	"modul3/oppgave5/overflowchannels"
 	"os"
 	"reflect"
 	"strconv"
 	"unicode"
-	//"github.com/pkg/profile"
+
+	"github.com/pkg/profile"
 )
 
 var isDecimal bool
 var firstInput bool
 
 func main() { // Tar inn to variabler, sjekker om de innholder bokstaver og deretter konverterer til float64 eller en passende inttype.
-	//defer profile.Start(profile.CPUProfile, profile.ProfilePath(".")).Stop()
+	defer profile.Start(profile.CPUProfile, profile.ProfilePath(".")).Stop()
 
 	arg1 := os.Args[1]
 	arg2 := os.Args[2]
@@ -46,31 +47,38 @@ func adjustIntType(a int, b int) { //finner ut hvilken inttype som passer. Print
 
 	total := a + b
 
-	if !overflow.Int8Overflow(total) {
+	chInt8, chInt32, chUint32, chInt64 := make(chan bool), make(chan bool), make(chan bool), make(chan bool)
+
+	go overflowchannels.Int8Overflow(total, chInt8)
+	go overflowchannels.Int32Overflow(total, chInt32)
+	go overflowchannels.Uint32Overflow(total, chUint32)
+	go overflowchannels.Int64Overflow(total, chInt64)
+
+	if !<-chInt8 {
 		endTotal := sum.SumInt8(int8(a), int8(b))
 		fmt.Println(endTotal)
 		fmt.Print("Variable type: ")
 		fmt.Println(reflect.TypeOf(endTotal).Kind())
 
-	} else if !overflow.Int32Overflow(total) {
+	} else if !<-chInt32 {
 		endTotal := sum.SumInt32(int32(a), int32(b))
 		fmt.Println(endTotal)
 		fmt.Print("Variable type: ")
 		fmt.Println(reflect.TypeOf(endTotal).Kind())
 
-	} else if !overflow.Uint32Overflow(total) {
+	} else if !<-chUint32 {
 
 		endTotal := sum.SumUint32(uint32(a), uint32(b))
 		fmt.Println(endTotal)
 		fmt.Print("Variable type: ")
 		fmt.Println(reflect.TypeOf(endTotal).Kind())
 
-	} else if !overflow.Int64Overflow(total) {
-
+	} else if !<-chInt64 {
 		endTotal := sum.SumInt64(int64(a), int64(b))
 		fmt.Println(endTotal)
 		fmt.Print("Variable type: ")
 		fmt.Println(reflect.TypeOf(endTotal).Kind())
+
 	} else {
 		fmt.Println("There's a glitch in the matrix")
 	}
