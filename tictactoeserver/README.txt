@@ -26,7 +26,7 @@ main.go filen er koden som kjøres på serveren vår. Den bruker pakkene:
  * tictactoeturnering 	(mp01)
  * tictactoe 		(mp01)
  * supportedLangs 	(mp02)
- * validInputd 		(mp02)
+ * validInputs 		(mp02)
 Mer informasjon om pakkene finner du på README.txt filen i mp01 folderet.
 
 OM mp02
