@@ -46,10 +46,15 @@ func handleConnection(c net.Conn) {
 		c.Close()
 		return
 	}
-
-	multiplayerComm.ClientPrint(c, "Skriv inn navnet ditt: ")
-	agentNames = append(agentNames, multiplayerComm.ClientRead(c))
-	multiplayerComm.PrintAll(agentList, agentNames[len(agentNames)-1] + " ble med.")
+name: 
+	multiplayerComm.ClientPrint(c, "\nSkriv inn navnet ditt: ")
+	name := multiplayerComm.ClientRead(c)
+	if len(name) == 0 {
+		multiplayerComm.ClientPrint(c, "Du kan ikke ha tomt navn. Prøv igjen.\n")
+		goto name
+	}
+	agentNames = append(agentNames, name)
+	multiplayerComm.PrintAll(agentList, name + " ble med.")
 	agentList = append(agentList, c)
 	multiplayerComm.PrintAll(agentList, "Antall spillere med: "+ strconv.Itoa(len(agentList)))
 	fmt.Printf("Tjener %s\n", c.RemoteAddr().String())
@@ -62,19 +67,17 @@ func handleConnection(c net.Conn) {
 
 func start(){
 	for {
-	start:
-		multiplayerComm.ClientPrintln(agentList[0], "Du er spillets vert. Skriv \"start\" Når spillet skal settes igang.")
+	//start:
+		multiplayerComm.ClientPrintln(agentList[0], "\nDu er spillets vert. Skriv \"start\" Når spillet skal settes igang.")
 		startSig := multiplayerComm.ClientRead(agentList[0])
 
-		if len(startSig) == 0 {
-			multiplayerComm.ClientPrintln(agentList[0], "Det må minst være 2 spillere for å spille multiplayer. \nVent på at en til har koblet seg til.")
-			goto start
-		
-		} else if strings.Fields(startSig)[0] == "start" {
+	    if strings.Fields(startSig)[0] == "start" && len(agentList) > 1 {
 			started = true
 			turneringMultiplayer.Turnering(agentList, agentNames)
 			end()
 			reload.Exec() //restarter serveren, for å kunne starte ny turnering.
+		} else {
+			multiplayerComm.ClientPrintln(agentList[0], "\nDet må minst være 2 spillere for å spille multiplayer. \nVent på at en til har koblet seg til.")
 		}
 
 	}
