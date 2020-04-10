@@ -13,6 +13,8 @@ func ClientRead(agentList []net.Conn, c net.Conn) string {
 	if input == "^C\n" || err != nil {
 		PrintAll(agentList, "Noen koblet fra. Restarter server")
 		reload.Exec()
+	} else if input == "forcerestart\n" {
+		reload.Exec()
 	}
 
 	return input[:len(input)-1]
