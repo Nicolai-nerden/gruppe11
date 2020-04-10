@@ -8,6 +8,7 @@ import (
 	"net"
 	"strconv"
 	"strings"
+	"github.com/teamwork/reload"
 )
 
 var playerList []tictactoeMultiplayer.Player
@@ -102,6 +103,12 @@ func drawQualifying(agents []net.Conn, playerAmount int) {
 		advancingPlayers = append(advancingPlayers, playerList[i])
 	}
 
+	if len(advancingPlayers) == 2 { // hvis finale
+		finale(agents, advancingPlayers[0], advancingPlayers[1])
+		reload.Exec()
+		return 
+	}
+
 	multiplayerComm.PrintAll(agents, "")
 	multiplayerComm.PrintAll(agents, "Disse Spillerne er videre: ")
 	multiplayerComm.PrintAll(agents, "")
@@ -148,8 +155,8 @@ func playOffs(agents []net.Conn, remainingPlayers []tictactoeMultiplayer.Player)
 
 		multiplayerComm.PrintAll(agents, "\nNeste match:")
 		multiplayerComm.PrintAll(agents, "\n-- "+games[i]+" --")
-		multiplayerComm.PrintAll(agents, "\n"+remainingPlayers[0].Name+", trykk enter for å starte matchen.")
-		proceed = multiplayerComm.ClientRead(remainingPlayers[0].Conn)
+		multiplayerComm.PrintAll(agents, "\n"+remainingPlayers[i].Name+", trykk enter for å starte matchen.")
+		proceed = multiplayerComm.ClientRead(remainingPlayers[i].Conn)
 
 		//Starter match. Den beste mot den dårligste, nest beste mot nest dårligste osv.
 		matchWinner := tictactoeMultiplayer.PlayGame(agents, remainingPlayers[i], remainingPlayers[(len(remainingPlayers)-i)-1])
@@ -198,8 +205,8 @@ func kvalikk(agents []net.Conn, playerList []tictactoeMultiplayer.Player) []tict
 	for i := 0; i < len(games); i++ { //Spiller ut turneringsrundens matcher
 		multiplayerComm.PrintAll(agents, "\nNeste match:")
 		multiplayerComm.PrintAll(agents, "\n-- "+games[i][0].Name+" vs "+games[i][1].Name+" --")
-		multiplayerComm.PrintAll(agents, "\n"+playerList[0].Name+", trykk enter for å starte matchen.")
-		proceed = multiplayerComm.ClientRead(playerList[0].Conn)
+		multiplayerComm.PrintAll(agents, "\n"+ games[i][0].Name+", trykk enter for å starte matchen.")
+		proceed = multiplayerComm.ClientRead(games[i][0].Conn)
 
 		//Starter matcher
 		matchWinner := tictactoeMultiplayer.PlayGame(agents, games[i][0], games[i][1])

@@ -71,13 +71,13 @@ func start(){
 		multiplayerComm.ClientPrintln(agentList[0], "\nDu er spillets vert. Skriv \"start\" Når spillet skal settes igang.")
 		startSig := multiplayerComm.ClientRead(agentList[0])
 
-	    if strings.Fields(startSig)[0] == "start" && len(agentList) > 1 {
+		if len(agentList) == 1 {
+			multiplayerComm.ClientPrintln(agentList[0], "\nDet må minst være 2 spillere for å spille multiplayer. \nVent på at en til har koblet seg til.")
+		} else if strings.Fields(startSig)[0] == "start" {
 			started = true
 			turneringMultiplayer.Turnering(agentList, agentNames)
 			end()
 			reload.Exec() //restarter serveren, for å kunne starte ny turnering.
-		} else {
-			multiplayerComm.ClientPrintln(agentList[0], "\nDet må minst være 2 spillere for å spille multiplayer. \nVent på at en til har koblet seg til.")
 		}
 
 	}
