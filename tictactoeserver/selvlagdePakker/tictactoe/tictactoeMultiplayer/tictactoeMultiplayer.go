@@ -20,10 +20,11 @@ type Player struct {
 var board map[int]string
 var runde int
 var winner Player
+var agentList []net.Conn
 
 // PlayGame starter Tic Tac Toe. Tar inn to spillere, Returnerer vinneren.
 func PlayGame(agents []net.Conn, p1 Player, p2 Player) Player {
-
+	agentList = agents
 	runde = 1
 	board = map[int]string{ // Lagrer spillets trekk. Tomme felt forblir tall som representerer posisjonen dens på brettet.
 		1: "1", 2: "2", 3: "3",
@@ -92,7 +93,7 @@ func checkIfTaken(c net.Conn) int {
 	move := ""
 Again:
 	multiplayerComm.ClientPrintln(c, "\nSkriv inn tallet som representerer ruten du vil sette brikken din på.")
-	move = multiplayerComm.ClientRead(c)
+	move = multiplayerComm.ClientRead(agentList, c)
 
 	if len(move) == 0 { //hvis tom input
 		multiplayerComm.ClientPrintln(c, "Tomt trekk. Prøv igjen.")

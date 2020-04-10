@@ -156,7 +156,7 @@ func playOffs(agents []net.Conn, remainingPlayers []tictactoeMultiplayer.Player)
 		multiplayerComm.PrintAll(agents, "\nNeste match:")
 		multiplayerComm.PrintAll(agents, "\n-- "+games[i]+" --")
 		multiplayerComm.PrintAll(agents, "\n"+remainingPlayers[i].Name+", trykk enter for å starte matchen.")
-		proceed = multiplayerComm.ClientRead(remainingPlayers[i].Conn)
+		proceed = multiplayerComm.ClientRead(agents, remainingPlayers[i].Conn)
 
 		//Starter match. Den beste mot den dårligste, nest beste mot nest dårligste osv.
 		matchWinner := tictactoeMultiplayer.PlayGame(agents, remainingPlayers[i], remainingPlayers[(len(remainingPlayers)-i)-1])
@@ -182,7 +182,7 @@ func newRound(agents []net.Conn) {
 	} else {
 		multiplayerComm.PrintAll(agents, "\nDet er "+strconv.Itoa(len(playerList)/2)+" turneringsrunder igjen.")
 		multiplayerComm.PrintAll(agents, "\n"+playerList[0].Name+"Trykk enter for å starte neste turneringsrunde.")
-		proceed = multiplayerComm.ClientRead(playerList[0].Conn)
+		proceed = multiplayerComm.ClientRead(agents, playerList[0].Conn)
 		playOffs(agents, playerList)
 	}
 }
@@ -206,7 +206,7 @@ func kvalikk(agents []net.Conn, playerList []tictactoeMultiplayer.Player) []tict
 		multiplayerComm.PrintAll(agents, "\nNeste match:")
 		multiplayerComm.PrintAll(agents, "\n-- "+games[i][0].Name+" vs "+games[i][1].Name+" --")
 		multiplayerComm.PrintAll(agents, "\n"+ games[i][0].Name+", trykk enter for å starte matchen.")
-		proceed = multiplayerComm.ClientRead(games[i][0].Conn)
+		proceed = multiplayerComm.ClientRead(agents, games[i][0].Conn)
 
 		//Starter matcher
 		matchWinner := tictactoeMultiplayer.PlayGame(agents, games[i][0], games[i][1])
@@ -253,7 +253,7 @@ func finale(agents []net.Conn, p1 tictactoeMultiplayer.Player, p2 tictactoeMulti
 	multiplayerComm.PrintAll(agents, "Finalen spilles mellom:")
 	multiplayerComm.PrintAll(agents, opponents)
 	multiplayerComm.PrintAll(agents, "\n"+p1.Name+", mash enter for å starte FINALEN")
-	proceed = multiplayerComm.ClientRead(p1.Conn)
+	proceed = multiplayerComm.ClientRead(agents, p1.Conn)
 
 	tournamentWinner := tictactoeMultiplayer.PlayGame(agents, p1, p2)
 

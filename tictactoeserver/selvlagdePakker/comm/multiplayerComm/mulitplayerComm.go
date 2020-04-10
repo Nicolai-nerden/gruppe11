@@ -8,9 +8,10 @@ import (
 )
 
 // ClientRead leser input fra klienten
-func ClientRead(c net.Conn) string {
+func ClientRead(agentList []net.Conn, c net.Conn) string {
 	input, err := bufio.NewReader(c).ReadString('\n')
-	if err != nil {
+	if input == "^C\n" || err != nil {
+		PrintAll(agentList, "Noen koblet fra. Restarter server")
 		reload.Exec()
 	}
 

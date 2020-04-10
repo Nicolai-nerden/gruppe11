@@ -48,7 +48,7 @@ func handleConnection(c net.Conn) {
 	}
 name: 
 	multiplayerComm.ClientPrint(c, "\nSkriv inn navnet ditt: ")
-	name := multiplayerComm.ClientRead(c)
+	name := multiplayerComm.ClientRead(agentList, c)
 	if len(name) == 0 {
 		multiplayerComm.ClientPrint(c, "Du kan ikke ha tomt navn. Prøv igjen.\n")
 		goto name
@@ -69,7 +69,7 @@ func start(){
 	for {
 	//start:
 		multiplayerComm.ClientPrintln(agentList[0], "\nDu er spillets vert. Skriv \"start\" Når spillet skal settes igang.")
-		startSig := multiplayerComm.ClientRead(agentList[0])
+		startSig := multiplayerComm.ClientRead(agentList, agentList[0])
 
 		if len(agentList) == 1 {
 			multiplayerComm.ClientPrintln(agentList[0], "\nDet må minst være 2 spillere for å spille multiplayer. \nVent på at en til har koblet seg til.")
@@ -91,8 +91,7 @@ func end(){
 
 func chooseMode(c net.Conn) bool {
 	multiplayerComm.ClientPrintln(c, "\nSkriv \"lokal\" for å spille lokalt på maskinen din.\n TRYKK ENTER FOR MULTIPLAYER.")
-	answer := multiplayerComm.ClientRead(c)
-	fmt.Println(answer)
+	answer := multiplayerComm.ClientRead(agentList, c)
 
 	if len(answer) == 0 {
 		return false
