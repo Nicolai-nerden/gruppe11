@@ -3,7 +3,7 @@ package validInputs
 import (
 	"bytes"
 	"strings"
-	"tx3server/mp02/supportedLangs"
+	"tx3server/selvlagdePakker/utf/supportedLangs"
 )
 
 // CheckIfValid sjekker om tegnet skrevet inn et gyldig trekk, på en av de støttede skriftspråkene.

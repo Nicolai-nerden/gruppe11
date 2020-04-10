@@ -2,23 +2,31 @@
 Applikasjonen forteller deg hvordan du bruker den. 
 
 
-OM APPLIKASJONEN "tictactoeturnering.go" i mappen tictactoeturnering
+OM APPLIKASJONEN "main.go" i mappen tictactoeturnering
+Det er to pakker i hver av folderne i "selvlagdePakker" en for multiplayer og en for
+lokal. 
+
+MULTIPLAYER
+Her kan du spille med venner over nettet. Den første som blir med er verten. 
+Her må man minst være to spillere. Om en mister forbindelse vil serveren restarte og 
+turneringen bli avlyst.
+
+LOKAL 
 Det er to moduser i tictactoeturering.go, PvP og Simulasjon.
 1. PvP lar deg legge til spillere og starter turneringen deretter. Her blir alle matchene spilt manuelt.
 2. Simulasjon simulerer spillere, kvalifiseringsresultater og deretter turneringen. Du må trykke enter-knappen for hvert steg. 
-   Alle matcher blir simulert. Hvis du hvil spille ut turneringen kjapt kan du spamme enter-knappen helt til applikasjonen er avsluttet.
+   Alle matcher blir simulert. Hvis du vil spille ut turneringen kjapt kan du spamme enter-knappen helt til applikasjonen er avsluttet.
 
 OM PAKKEN tictactoeturnering:
 Dette er logikken for selve applikasjonen med og uten turnering.
 
 
-OM PAKKEN "tictactoe":
+OM PAKKENE i "tictactoe":
 Dette er logikken for selve Tic-Tac-Toe-spillet på serveren.
-Dette er en pakke som brukes i tictactoeturnering.go.
-Hvis du vil spille kun en match må dette likevel gjøres på serveren.
+Dette er pakker som brukes i turneringslogikken.
 
-OM PAKKEN clientcommunication:
-Dette er en pakke med funksjoner som vi har laget som skal printe ut på, eller skanne inn strings fra klienten. 
+OM PAKKENE i comm:
+Dette er en pakker med funksjoner somt som skal printe ut på, eller skanne inn strings fra klienten. 
 
 HVORDAN TURNERINGSLOGIKKEN FUNGERER.
 1. Hvis antallet spillere er en toerpotens (2^n - dvs. 2, 4, 8, 16 osv.) Starter den sluttspill med engang.

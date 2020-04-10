@@ -21,6 +21,8 @@ For å analysere med pproff:
 5. Skriv inn i terminalen "go tool pprof -http=:8080 cpu.pprof"
 Dette vil åpne en fane i nettleseren med analyse av filen.
 
+I folderet oppgave5 finner du en forbedret versjon av denne applikasjonen.
+
 Pass på at du har installert graphviz og Dave Cheney sin profileringspakke.
 For å installere skriv in disse linjene i terminalen.
 1. "go get github.com/pkg/profile"

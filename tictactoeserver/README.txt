@@ -30,14 +30,17 @@ Du kan likevel bruke applikasjonen lokalt.
 4. kjør "nc localhost 8081" i den nye terminalen.
    (Ncat localhost 8080 for windows)
 
-OM mp01
-main.go filen er koden som kjøres på serveren vår. Den bruker pakkene: 
- * client communication (mp01)
- * tictactoeturnering 	(mp01)
- * tictactoe 		(mp01)
- * supportedLangs 	(mp02)
- * validInputs 		(mp02)
-Mer informasjon om pakkene finner du på README.txt filen i mp01 folderet.
+OM tictactoeserver
+main.go filen er koden som kjøres på serveren vår. Den bruker diverse pakker vi har lagd.
+* I hver i turnering, tictactoe, og comm er det to nesten identiske pakker.
+* Grunnen til at det er to nesten like pakker er fordi serveren bruker to ulike måter å
+  kommunisere avhengig av om den spiller lokalt eller multiplayer.
+* Det er forskjell på funksjonalitet i lokal og multiplayer for turneringlogikken. I 
+  lokal. I Lokal kan du simulere spill. Det kan du ikke i multiplayer. Det er andre små
+  Forskjeller også.
+
+
+Mer informasjon om pakkene finner du på ABOUT.txt.
 
 OM mp02
 I makeLangMap er det en applikasjon som kan brukes til å legge til flere skriftspråk på 

@@ -7,3 +7,5 @@ det må aktiveres i innstillinger).
 
 I mappen tictactoe server finner du koden for mp01 og mp02
 
+Applikasjonen msgapp kan brukes i egen terminal for å snakke med hverandre mens
+Spiller turnering.

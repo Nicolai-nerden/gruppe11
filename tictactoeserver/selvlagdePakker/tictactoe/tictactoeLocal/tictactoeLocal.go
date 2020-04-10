@@ -1,8 +1,8 @@
 package tictactoe
 
 import (
-	"tx3server/mp01/clientcommunication"
-	"tx3server/mp02/validInputs"
+	"tx3server/selvlagdePakker/comm/localComm"
+	"tx3server/selvlagdePakker/utf/validInputs"
 	"math/rand"
 	"net"
 	"strconv"

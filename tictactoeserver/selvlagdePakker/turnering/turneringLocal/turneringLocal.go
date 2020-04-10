@@ -1,4 +1,4 @@
-package tictactoeturnering
+package turneringLocal
 
 import (
 	"fmt"
@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"tx3server/mp01/clientcommunication"
-	"tx3server/mp01/tictactoe"
-	"tx3server/mp02/supportedLangs"
-	"tx3server/mp02/validInputs"
+	"tx3server/selvlagdePakker/comm/localComm"
+	"tx3server/selvlagdePakker/tictactoe/tictactoeLocal"
+	"tx3server/selvlagdePakker/utf/supportedLangs"
+	"tx3server/selvlagdePakker/utf/validInputs"
 )
 
 var playerList []tictactoe.Player
