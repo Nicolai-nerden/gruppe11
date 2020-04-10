@@ -16,6 +16,9 @@ For Mobile enheter
 1. Last ned Libterm for iOS-eller Android.
 2. Se steg 1 "For Mac"
 
+LibTerm for Android: https://baixarapk.gratis/en/app/1380911705/libterm
+LibTerm for iOS: https://apps.apple.com/us/app/libterm/id1380911705?ign-mpt=uo%3D4
+
 
 For windows:
 Serveren kommuniserer gjennom netcat slik at man ikke skal trenge å laste ned en klient.
