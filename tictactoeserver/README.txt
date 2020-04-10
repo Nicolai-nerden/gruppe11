@@ -1,9 +1,20 @@
 
+VIDEOEKSEMPEL AV APPLIKASJONEN I BRUK:
+I dette folderet er det en lenkefil. Denne åpner en video som viser et praktisk eksempel
+av spill på serveren fra en iPhone via terminal-applikasjonen LibTerm
+Lenkefilen fører til: 
+https://drive.google.com/file/d/1mEcprU-Io0QhYD2c_NAMLEUFgzcjMJnR/view
+
+
 HVORDAN SPILLE PÅ SERVEREN!
 For Mac
 1. Skriv dette inn I terminalen din og spill i vei:
 
    nc 178.128.250.190 8080
+
+For Mobile enheter
+1. Last ned Libterm for iOS-eller Android.
+2. Se steg 1 "For Mac"
 
 
 For windows:
@@ -32,20 +43,18 @@ Du kan likevel bruke applikasjonen lokalt.
 
 OM tictactoeserver
 main.go filen er koden som kjøres på serveren vår. Den bruker diverse pakker vi har lagd.
-* I hver i turnering, tictactoe, og comm er det to nesten identiske pakker.
-* Grunnen til at det er to nesten like pakker er fordi serveren bruker to ulike måter å
+* I turnering, "tictactoe", og comm er det lignende pakker en for multiplayer og en for lokalt spill via serveren.
+* Grunnen til dette er at serveren bruker to ulike måter å
   kommunisere avhengig av om den spiller lokalt eller multiplayer.
-* Det er forskjell på funksjonalitet i lokal og multiplayer for turneringlogikken. I 
-  lokal. I Lokal kan du simulere spill. Det kan du ikke i multiplayer. Det er andre små
-  Forskjeller også.
+* Det er forskjell på funksjonalitet i lokal og multiplayer for turneringlogikken. I Lokalkan du simulere spill. 
+  Det kan du ikke i multiplayer. Det er andre små forskjeller også slik som å legge til spillere manuelt og velge 
+  Mellom simulasjonsmodus og pvp. 
 
+I pakken makeLangMap i utf er det en applikasjon som kan brukes til å legge til flere skriftspråk på 
+tictactoe serveren. Denne er relatert til mp02. 
+
+I pakken utf finner du også pakkene supportedLangs og validInputs som brukes for å oversette skrifttegn
+og andre alternativer for 1-9 om til bytes for å deretter å sjekke om det er et gyldig trekk.   
 
 Mer informasjon om pakkene finner du på ABOUT.txt.
-
-OM mp02
-I makeLangMap er det en applikasjon som kan brukes til å legge til flere skriftspråk på 
-tictactoe serveren. 
-
-Her finner du pakkene supportedLangs og validInputs som brukes for å oversette skrifttegn
-og andre alternativer for 1-9 om til bytes for å deretter å sjekke om det er et gyldig trekk.   
 

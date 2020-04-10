@@ -62,16 +62,16 @@ func printBoard() string {
 // place Move plasserer trekk på brettet.
 func placeMove(p1 Player, p2 Player) (Player, Player) {
 
-	var p net.Conn
+	var p Player
 
 	if runde%2 == 0 {
-		p = p2.Conn
+		p = p2
 	} else {
-		p = p1.Conn
+		p = p1
 	}
 
 	start := time.Now() // Tar tidspunktet siden fra når trekket starter.
-	move := checkIfTaken(p)
+	move := checkIfTaken(p.Conn)
 	timeUsed := time.Since(start).Milliseconds() // Regner ut tiden som har gått siden trekket startet.
 
 	i := 0
@@ -120,7 +120,7 @@ newRound:
 	p1, p2 = placeMove(p1, p2) // plasserer brikken i på brettet og oppdaterer hver spiller har brukt.
 	multiplayerComm.PrintAll(agents, printBoard())
 
-	for i := 0; i < len(winningCombos); i++ { //Sjekker om det er noen vinner kombinasjoner på brettet.
+	for i := 0; i < len(winningCombos); i++ { //Sjekker om det er noen vinnerkombinasjoner på brettet.
 		if board[winningCombos[i][0]] == board[winningCombos[i][1]] && board[winningCombos[i][1]] == board[winningCombos[i][2]] {
 			if board[winningCombos[i][0]] == "X" {
 				winner = p1

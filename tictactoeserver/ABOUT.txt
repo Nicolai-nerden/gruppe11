@@ -17,7 +17,7 @@ Det er to moduser i tictactoeturering.go, PvP og Simulasjon.
 2. Simulasjon simulerer spillere, kvalifiseringsresultater og deretter turneringen. Du må trykke enter-knappen for hvert steg. 
    Alle matcher blir simulert. Hvis du vil spille ut turneringen kjapt kan du spamme enter-knappen helt til applikasjonen er avsluttet.
 
-OM PAKKEN tictactoeturnering:
+OM PAKKENE tictactoeturnering:
 Dette er logikken for selve applikasjonen med og uten turnering.
 
 
