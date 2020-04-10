@@ -5,6 +5,13 @@ av spill på serveren fra en iPhone via terminal-applikasjonen LibTerm
 Lenkefilen fører til: 
 https://drive.google.com/file/d/1mEcprU-Io0QhYD2c_NAMLEUFgzcjMJnR/view
 
+FOR SENSOR / JANIS / HJELPELÆRERE
+Hvis du ikke får spilt multiplayer kan du skrive "forcerestart" f.eks når den ber deg om navn.
+(Hvis du vurderer oppgaven vår er det bare å gjøre dette selvom en turnering evt. er i gang.) 
+
+FOR ALLE ANDRE
+Hvis du kobles på serveren, og du ikke får spilt multiplayer OG du vet dette ikke er fordi
+noen andre spiller kan du skrive "forcerestart" for å restarte serveren. 
 
 HVORDAN SPILLE PÅ SERVEREN!
 For Mac
@@ -36,7 +43,7 @@ homwbrew eller gjennom nmap. Sistnevnte har vi god erfaring med.
 HVIS SERVEREN ER NEDE:
 Hvis nc 178.128.250.190 8080 ikke fungerer, betyr dette at serveren har krasjet. Si gjerne i fra
 til en av medlemmene i gruppe11. 
-Du kan likevel bruke applikasjonen lokalt.
+Du kan likevel bruke serveren lokalt.
 
 1. Åpne terminal i dette folderet.
 2. kjør "go run main.go"
