@@ -20,11 +20,11 @@ For Mac
    nc 178.128.250.190 8080
 
 For Mobile enheter
-1. Last ned Libterm for iOS-eller Android.
+1. Last ned Libterm for iOS eller Terminal Emulator for android.
 2. Se steg 1 "For Mac"
 
 LibTerm for Android: https://baixarapk.gratis/en/app/1380911705/libterm
-LibTerm for iOS: https://apps.apple.com/us/app/libterm/id1380911705?ign-mpt=uo%3D4
+Terminal emulator: https://play.google.com/store/apps/details?id=jackpal.androidterm&hl=en%5D%5B1%5D
 
 
 For windows:
