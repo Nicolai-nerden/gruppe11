@@ -15,6 +15,7 @@ var agentList []net.Conn
 var agentNames []string
 var started bool = false
 
+// setter opp serveren og godkjenner forespørsler fra nye klienter. Og sender dem til handle connection
 func main() {
 	fmt.Println("Serveren kjører.")
 
@@ -65,6 +66,7 @@ name:
 	}
 }
 
+// hosten får mulighet til å starte spillet. Tillater ikke spill med færre enn 2
 func start(){
 	for {
 	//start:
@@ -82,7 +84,7 @@ func start(){
 
 	}
 }
-
+// sletter alle forbindelser
 func end(){
 	for i:=0; i < len(agentList); i++ {
 		agentList[i].Close()

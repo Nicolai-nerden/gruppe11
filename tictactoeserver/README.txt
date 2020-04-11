@@ -21,7 +21,8 @@ For Mac
 
 For Mobile enheter
 1. Last ned Libterm for iOS eller Terminal Emulator for android.
-2. Se steg 1 "For Mac"
+2. Libterm: "nc 178.128.250.190 8080"
+   Terminal Emulator: "toybox nc 178.128.250.190 8080"
 
 LibTerm for Android: https://baixarapk.gratis/en/app/1380911705/libterm
 Terminal emulator: https://play.google.com/store/apps/details?id=jackpal.androidterm&hl=en%5D%5B1%5D
@@ -29,16 +30,15 @@ Terminal emulator: https://play.google.com/store/apps/details?id=jackpal.android
 
 For windows:
 Serveren kommuniserer gjennom netcat slik at man ikke skal trenge å laste ned en klient.
-Windows har derimot ikke netcat som en standard. Dette må derfor installeres. Enten på 
-homwbrew eller gjennom nmap. Sistnevnte har vi god erfaring med. 
+Windows har derimot ikke netcat som en standardkommando. Vi har derfor laget vår egen 
+Klient for windowsbrukere som du finner i clientfolderet. Den er hardcodet til å kobles til den 
+eksterne serveren vår. 
+Hvis du vil endre ip og port til å kjøre som client til main.go lokalt.
+Bytt ut linje 12 i koden med dette: 
 
-   Nmap kan lastes ned her: https://nmap.org/download.html
-   Mer om Nmap: https://en.wikipedia.org/wiki/Nmap
+conn, err := net.Dial("tcp4", "127.0.0.1:8081")
 
-1. Installer netcat, enten det er i homebrew, nmap eller andre program.
-2. For nmap kan du skrive dette. 
 
-   Ncat 178.128.250.190 8080
 
 HVIS SERVEREN ER NEDE:
 Hvis nc 178.128.250.190 8080 ikke fungerer, betyr dette at serveren har krasjet. Si gjerne i fra
