@@ -95,7 +95,7 @@ func chooseMode(c net.Conn) bool {
 
 	if len(answer) == 0 {
 		return false
-	} else if strings.Fields(answer)[0] == "lokal" {
+	} else if answer == "lokal" {
 		return true
 	}
 	return false
